@@ -1,10 +1,16 @@
 import React, { useRef } from "react";
-import { View, StyleSheet, Dimensions } from "react-native";
-import Slide, { SLIDE_HEIGHT, BORDER_RADIUS } from "./Slide";
+import { View, StyleSheet, Dimensions, Image } from "react-native";
+import Slide, { SLIDE_HEIGHT } from "./Slide";
 import { interpolateColor, useScrollHandler } from "react-native-redash";
 import Subslide from "./Subslide";
 import Dot from "./Dot";
-import Animated, { divide, multiply } from "react-native-reanimated";
+import Animated, {
+  divide,
+  Extrapolate,
+  interpolate,
+  multiply,
+} from "react-native-reanimated";
+import { theme } from "../../components";
 
 const { width } = Dimensions.get("window");
 
@@ -15,7 +21,11 @@ const slides = [
     subtitle: "Find Your Outfits",
     description:
       "Confused about your outfits? Don't worry find the best oufit here",
-    picture: require("../../../assets/images/1.png"),
+    picture: {
+      src: require("../../../assets/images/1.png"),
+      width: 2513,
+      height: 3583,
+    },
   },
   {
     title: "Playfull",
@@ -23,7 +33,11 @@ const slides = [
     subtitle: "Hear it First, Wear it First",
     description:
       "Hating the clothes in your wardrobe? Explore hundreds of ourfit ideas",
-    picture: require("../../../assets/images/2.png"),
+    picture: {
+      src: require("../../../assets/images/2.png"),
+      width: 2791,
+      height: 3744,
+    },
   },
   {
     title: "Excentric",
@@ -31,7 +45,11 @@ const slides = [
     subtitle: "Your Style, Your Way",
     description:
       "Create your individuals & unique style and look amazing everyday",
-    picture: require("../../../assets/images/3.png"),
+    picture: {
+      src: require("../../../assets/images/3.png"),
+      width: 2738,
+      height: 3244,
+    },
   },
   {
     title: "Funky",
@@ -39,7 +57,11 @@ const slides = [
     subtitle: "Look Good, Feel Good",
     description:
       "Discover the best trends in fashion and explore your personality",
-    picture: require("../../../assets/images/4.png"),
+    picture: {
+      src: require("../../../assets/images/4.png"),
+      width: 1757,
+      height: 2551,
+    },
   },
 ];
 
@@ -56,6 +78,30 @@ const Onboarding = () => {
   return (
     <View style={styles.container}>
       <Animated.View style={[styles.slider, { backgroundColor }]}>
+        {slides.map(({ picture }, index) => {
+          const opacity = interpolate(x, {
+            inputRange: [
+              (index - 0.5) * width,
+              index * width,
+              (index + 0.5) * width,
+            ],
+            outputRange: [0, 1, 0],
+            extrapolate: Extrapolate.CLAMP,
+          });
+          return (
+            <Animated.View style={[styles.underlay, { opacity }]} key={index}>
+              <Image
+                source={picture.src}
+                style={{
+                  width: width - theme.borderRadii.xl,
+                  height:
+                    ((width - theme.borderRadii.xl) * picture.height) /
+                    picture.width,
+                }}
+              />
+            </Animated.View>
+          );
+        })}
         <Animated.ScrollView
           ref={scroll}
           horizontal
@@ -65,8 +111,8 @@ const Onboarding = () => {
           bounces={false}
           {...scrollHandler}
         >
-          {slides.map(({ title, picture }, index) => (
-            <Slide key={index} right={!!(index % 2)} {...{ title, picture }} />
+          {slides.map(({ title }, index) => (
+            <Slide key={index} right={!!(index % 2)} {...{ title }} />
           ))}
         </Animated.ScrollView>
       </Animated.View>
@@ -122,7 +168,7 @@ const styles = StyleSheet.create({
   },
   slider: {
     height: SLIDE_HEIGHT,
-    borderBottomRightRadius: BORDER_RADIUS,
+    borderBottomRightRadius: theme.borderRadii.xl,
   },
   footer: {
     flex: 1,
@@ -130,14 +176,22 @@ const styles = StyleSheet.create({
   footerContent: {
     flex: 1,
     backgroundColor: "white",
-    borderTopLeftRadius: BORDER_RADIUS,
+    borderTopLeftRadius: theme.borderRadii.xl,
   },
   pagination: {
     ...StyleSheet.absoluteFillObject,
-    height: BORDER_RADIUS,
+    height: theme.borderRadii.xl,
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
+  },
+
+  underlay: {
+    ...StyleSheet.absoluteFillObject,
+    justifyContent: "flex-end",
+    alignItems: "center",
+    borderBottomRightRadius: theme.borderRadii.xl,
+    overflow: "hidden",
   },
 });
 
