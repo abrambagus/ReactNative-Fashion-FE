@@ -1,24 +1,11 @@
 import * as React from "react";
-import { createStackNavigator } from "@react-navigation/stack";
 import {
-  Onboarding,
-  Welcome,
   assets as authenticationAssets,
+  AuthenticationNavigator,
 } from "./src/Authentication";
 import { LoadAssets, theme } from "./src/components";
 import { ThemeProvider } from "@shopify/restyle";
-import { Routes } from "./src/components/Naviagtion";
-
-const AuthenticationStack = createStackNavigator<Routes>();
-
-const AuthenticationNavigator = () => {
-  return (
-    <AuthenticationStack.Navigator screenOptions={{ headerShown: false }}>
-      <AuthenticationStack.Screen name="Onboarding" component={Onboarding} />
-      <AuthenticationStack.Screen name="Welcome" component={Welcome} />
-    </AuthenticationStack.Navigator>
-  );
-};
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 const assets = [...authenticationAssets];
 
@@ -33,7 +20,9 @@ export default function App() {
   return (
     <ThemeProvider {...{ theme }}>
       <LoadAssets {...{ fonts, assets }}>
-        <AuthenticationNavigator />
+        <SafeAreaProvider>
+          <AuthenticationNavigator />
+        </SafeAreaProvider>
       </LoadAssets>
     </ThemeProvider>
   );
