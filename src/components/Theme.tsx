@@ -8,6 +8,7 @@ const theme = createTheme({
     text: "rgba(12,13,52,0.7)",
     grey: "rgba(12, 13, 52, 0.05)",
     transparent: "transparent",
+    danger: "#FF0058",
   },
   spacing: {
     n: 0,
@@ -15,6 +16,7 @@ const theme = createTheme({
     m: 16,
     l: 24,
     xl: 40,
+    xxl: 106,
   },
 
   borderRadii: {
