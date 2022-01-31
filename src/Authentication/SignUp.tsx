@@ -1,10 +1,11 @@
 import React, { useRef } from "react";
+import { TextInput as RNTextInput } from "react-native";
+import * as Yup from "yup";
 import { Button, Box, Container, Text } from "../components";
 import TextInput from "./components/Form/TextInput";
-import Checkbox from "./components/Form/Checkbox";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as Yup from "yup";
+
 import Footer from "./components/Footer";
 import { Routes, StackNavigationProps } from "../components/Naviagtion";
 
@@ -20,8 +21,8 @@ const SignUpSchema = Yup.object().shape({
 });
 
 const SignUp = ({ navigation }: StackNavigationProps<Routes, "SignUp">) => {
-  const password = useRef<typeof TextInput>(null);
-  const passwordConfirmation = useRef<typeof TextInput>(null);
+  const password = useRef<RNTextInput>(null);
+  const passwordConfirmation = useRef<RNTextInput>(null);
 
   const footer = (
     <Footer

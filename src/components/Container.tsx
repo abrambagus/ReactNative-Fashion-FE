@@ -1,5 +1,6 @@
+import Constants from "expo-constants";
 import React, { ReactNode } from "react";
-import { Dimensions, Image, StyleSheet, StatusBar } from "react-native";
+import { Dimensions, Image, StyleSheet, Platform } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Box, useTheme } from "./Theme";
@@ -11,7 +12,7 @@ interface ContainerProps {
 
 export const assets = [require("../../assets/images/patterns/1.png")];
 
-const { width, height: windowHeight } = Dimensions.get("window");
+const { width, height: wHeight } = Dimensions.get("window");
 const aspectRatio = 750 / 1125;
 const height = width * aspectRatio;
 
@@ -21,9 +22,13 @@ const Container = ({ children, footer }: ContainerProps) => {
   const theme = useTheme();
 
   return (
-    <KeyboardAwareScrollView>
-      <Box flex={1} height={windowHeight + 33} backgroundColor="secondary">
-        <StatusBar barStyle="light-content" />
+    <KeyboardAwareScrollView scrollEnabled={false}>
+      <Box
+        height={
+          wHeight + (Platform.OS === "android" ? Constants.statusBarHeight : 0)
+        }
+        backgroundColor="secondary"
+      >
         <Box backgroundColor="white">
           <Box
             borderBottomLeftRadius="xl"
