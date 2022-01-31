@@ -116,11 +116,14 @@ const Login = ({ navigation }: StackNavigationProps<Routes, "Login">) => {
                 />
               )}
             />
-
-            <Button variant="transparent" onPress={() => true}>
+            <Button
+              variant="transparent"
+              onPress={() => navigation.navigate("ForgotPassword")}
+            >
               <Text color="primary">Forgot Password</Text>
             </Button>
           </Box>
+
           <Box alignItems="center" marginTop="m">
             <Button
               variant="primary"

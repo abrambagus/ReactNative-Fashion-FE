@@ -4,7 +4,7 @@ import Onboarding, { assets as onBoaringAssets } from "./Onboarding";
 import Welcome, { assets as WelcomeAssets } from "./Welcome";
 import Login from "./Login";
 import SignUp from "./SignUp";
-import ForgotPassword from './ForgotPassword'
+import ForgotPassword from "./ForgotPassword";
 import { Routes } from "../components/Naviagtion";
 export const assets = [...onBoaringAssets, ...WelcomeAssets];
 
