@@ -29,7 +29,7 @@ const ForgotPassword = ({
     resolver: yupResolver(ForgotPasswordSchema),
   });
 
-  const onSubmit = (data: any) => console.log(data);
+  const onSubmit = () => navigation.navigate("PasswordChanged");
 
   return (
     <Container {...{ footer }}>

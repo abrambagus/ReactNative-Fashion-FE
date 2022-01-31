@@ -1,11 +1,11 @@
 import React from "react";
 import { Image, Dimensions } from "react-native";
-import { Button } from "../../components";
-import { Routes, StackNavigationProps } from "../../components/Naviagtion";
-import { Box, Text, useTheme } from "../../components";
+import { Button } from "../components";
+import { Routes, StackNavigationProps } from "../components/Naviagtion";
+import { Box, Text, useTheme } from "../components";
 
 const picture = {
-  src: require("../../../assets/images/5.png"),
+  src: require("../../assets/images/5.png"),
   width: 3383,
   height: 5074,
 };
