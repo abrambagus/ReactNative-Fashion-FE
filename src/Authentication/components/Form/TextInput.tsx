@@ -6,16 +6,17 @@ import {
 } from "react-native";
 import { Box, useTheme } from "../../../components";
 import { Feather as Icon } from "@expo/vector-icons";
+import { FieldError } from "react-hook-form";
 
 interface TextInputProps extends RNTextInputProps {
   icon: string;
   touched?: boolean;
-  error?: string;
+  error?: FieldError;
 }
 
 const TextInput = ({ icon, touched, error, ...props }: TextInputProps) => {
   const theme = useTheme();
-  const SIZE = theme.borderRadii.m * 2;
+  const SIZE = theme.borderRadii.m * 2.5;
   const reColor = !touched ? "text" : error ? "danger" : "primary";
   const color = theme.colors[reColor];
 
@@ -47,8 +48,14 @@ const TextInput = ({ icon, touched, error, ...props }: TextInputProps) => {
           backgroundColor={!error ? "primary" : "danger"}
           justifyContent="center"
           alignItems="center"
+          style={{ borderRadius: SIZE / 2 }}
         >
-          <Icon name={!error ? "check" : "x"} color="white" size={16} />
+          <Icon
+            name={!error ? "check" : "x"}
+            color="white"
+            size={16}
+            style={{ textAlign: "center" }}
+          />
         </Box>
       )}
     </Box>

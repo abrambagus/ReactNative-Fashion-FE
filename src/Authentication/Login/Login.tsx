@@ -3,7 +3,8 @@ import { Button, Box, Container, Text } from "../../components";
 import TextInput from "../components/Form/TextInput";
 import SocialLogin from "../components/SocialLogin";
 import Checkbox from "../components/Form/Checkbox";
-import { Formik } from "formik";
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 
 const LoginSchema = Yup.object().shape({
@@ -33,6 +34,18 @@ const Login = () => {
     </>
   );
 
+  const { handleSubmit, control, setValue } = useForm({
+    mode: "onChange",
+    defaultValues: {
+      email: "",
+      password: "",
+      remember: false,
+    },
+    resolver: yupResolver(LoginSchema),
+  });
+
+  const onSubmit = (data: any) => console.log(data);
+
   return (
     <Container {...{ footer }}>
       <Box padding="xl">
@@ -42,59 +55,80 @@ const Login = () => {
         <Text variant="body" textAlign="center" marginBottom="l">
           Use your credentials below and login to your account.
         </Text>
-        <Formik
-          initialValues={{ email: "", password: "", remember: true }}
-          onSubmit={(initialValues) => console.log(initialValues)}
-          validationSchema={LoginSchema}
-        >
-          {({
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            errors,
-            touched,
-            values,
-            setFieldValue,
-          }) => (
-            <Box>
-              <Box marginBottom="m">
+        <Box>
+          <Box marginBottom="m">
+            <Controller
+              control={control}
+              name="email"
+              rules={{
+                required: true,
+              }}
+              render={({
+                field: { onChange, onBlur, value },
+                fieldState: { isTouched, error },
+              }) => (
                 <TextInput
                   icon="mail"
                   placeholder="Enter your email"
-                  onChangeText={handleChange("email")}
-                  onBlur={handleBlur("email")}
-                  error={errors.email}
-                  touched={touched.email}
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  error={error}
+                  touched={isTouched}
+                  value={value}
                 />
-              </Box>
+              )}
+            />
+          </Box>
+
+          <Controller
+            control={control}
+            name="password"
+            rules={{
+              required: true,
+            }}
+            render={({
+              field: { onChange, onBlur, value },
+              fieldState: { isTouched, error },
+            }) => (
               <TextInput
                 icon="lock"
                 placeholder="Enter your password"
-                onChangeText={handleChange("password")}
-                onBlur={handleBlur("password")}
-                error={errors.password}
-                touched={touched.password}
+                onChangeText={onChange}
+                onBlur={onBlur}
+                error={error}
+                touched={isTouched}
+                value={value}
               />
-              <Box flexDirection="row" justifyContent="space-between">
+            )}
+          />
+          <Box flexDirection="row" justifyContent="space-between">
+            <Controller
+              control={control}
+              name="remember"
+              rules={{
+                required: true,
+              }}
+              render={({ field: { value } }) => (
                 <Checkbox
                   label="Remember me"
-                  checked={values.remember}
-                  onChange={() => setFieldValue("remember", !values.remember)}
+                  checked={value}
+                  onChange={(v: boolean) => setValue("remember", v)}
                 />
-                <Button variant="transparent" onPress={() => true}>
-                  <Text color="primary">Forgot Password</Text>
-                </Button>
-              </Box>
-              <Box alignItems="center" marginTop="m">
-                <Button
-                  variant="primary"
-                  onPress={handleSubmit}
-                  label="Log into your account"
-                />
-              </Box>
-            </Box>
-          )}
-        </Formik>
+              )}
+            />
+
+            <Button variant="transparent" onPress={() => true}>
+              <Text color="primary">Forgot Password</Text>
+            </Button>
+          </Box>
+          <Box alignItems="center" marginTop="m">
+            <Button
+              variant="primary"
+              onPress={handleSubmit(onSubmit)}
+              label="Log into your account"
+            />
+          </Box>
+        </Box>
       </Box>
     </Container>
   );

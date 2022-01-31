@@ -6,12 +6,15 @@ import { Feather as Icon } from "@expo/vector-icons";
 interface CheckboxProps {
   label: string;
   checked: boolean;
-  onChange: () => void;
+  onChange: (v: boolean) => void;
 }
 
 const Checkbox = ({ label, onChange, checked }: CheckboxProps) => {
   return (
-    <RectButton onPress={() => onChange()} style={{ justifyContent: "center" }}>
+    <RectButton
+      onPress={() => onChange(!checked)}
+      style={{ justifyContent: "center" }}
+    >
       <Box flexDirection="row">
         <Box
           height={20}
