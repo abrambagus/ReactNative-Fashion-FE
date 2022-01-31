@@ -1,11 +1,6 @@
 import React, { ReactNode } from "react";
-import {
-  Dimensions,
-  Image,
-  StyleSheet,
-  ScrollView,
-  StatusBar,
-} from "react-native";
+import { Dimensions, Image, StyleSheet, StatusBar } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Box, useTheme } from "./Theme";
 
@@ -26,7 +21,7 @@ const Container = ({ children, footer }: ContainerProps) => {
   const theme = useTheme();
 
   return (
-    <ScrollView>
+    <KeyboardAwareScrollView>
       <Box flex={1} height={windowHeight + 33} backgroundColor="secondary">
         <StatusBar barStyle="light-content" />
         <Box backgroundColor="white">
@@ -69,7 +64,7 @@ const Container = ({ children, footer }: ContainerProps) => {
           <Box height={insets.bottom} />
         </Box>
       </Box>
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 };
 

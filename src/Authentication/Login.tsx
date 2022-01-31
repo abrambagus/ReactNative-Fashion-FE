@@ -1,11 +1,12 @@
-import React from "react";
-import { Button, Box, Container, Text } from "../../components";
-import TextInput from "../components/Form/TextInput";
-import SocialLogin from "../components/SocialLogin";
-import Checkbox from "../components/Form/Checkbox";
+import React, { useRef } from "react";
+import { Button, Box, Container, Text } from "../components";
+import TextInput from "./components/Form/TextInput";
+import Checkbox from "./components/Form/Checkbox";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
+import Footer from "./components/Footer";
+import { Routes, StackNavigationProps } from "../components/Naviagtion";
 
 const LoginSchema = Yup.object().shape({
   password: Yup.string()
@@ -15,23 +16,15 @@ const LoginSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
 });
 
-const Login = () => {
+const Login = ({ navigation }: StackNavigationProps<Routes, "Login">) => {
+  const password = useRef<typeof TextInput>(null);
+
   const footer = (
-    <>
-      <SocialLogin />
-      <Box alignItems="center">
-        <Button variant="transparent" onPress={() => alert("Sign up!")}>
-          <Box flexDirection="row" justifyContent="center">
-            <Text variant="button" color="white">
-              Don't have an account?
-            </Text>
-            <Text marginLeft="s" variant="button" color="primary">
-              Sign Up here
-            </Text>
-          </Box>
-        </Button>
-      </Box>
-    </>
+    <Footer
+      title="Don't have an account?"
+      action="Sign Up here"
+      onPress={() => navigation.navigate("SignUp")}
+    />
   );
 
   const { handleSubmit, control, setValue } = useForm({
@@ -60,9 +53,6 @@ const Login = () => {
             <Controller
               control={control}
               name="email"
-              rules={{
-                required: true,
-              }}
               render={({
                 field: { onChange, onBlur, value },
                 fieldState: { isTouched, error },
@@ -75,22 +65,24 @@ const Login = () => {
                   error={error}
                   touched={isTouched}
                   value={value}
+                  autoCompleteType="email"
+                  autoCapitalize="none"
+                  returnKeyType="next"
+                  returnKeyLabel="next"
+                  onSubmitEditing={() => password.current?.focus()}
                 />
               )}
             />
           </Box>
-
           <Controller
             control={control}
             name="password"
-            rules={{
-              required: true,
-            }}
             render={({
               field: { onChange, onBlur, value },
               fieldState: { isTouched, error },
             }) => (
               <TextInput
+                ref={password}
                 icon="lock"
                 placeholder="Enter your password"
                 onChangeText={onChange}
@@ -98,6 +90,12 @@ const Login = () => {
                 error={error}
                 touched={isTouched}
                 value={value}
+                secureTextEntry
+                autoCompleteType="password"
+                autoCapitalize="none"
+                returnKeyType="go"
+                returnKeyLabel="go"
+                onSubmitEditing={handleSubmit(onSubmit)}
               />
             )}
           />
