@@ -9,6 +9,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import Footer from "./components/Footer";
 import { Routes, StackNavigationProps } from "../components/Naviagtion";
+import { BorderlessButton } from "react-native-gesture-handler";
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
@@ -101,7 +102,12 @@ const Login = ({ navigation }: StackNavigationProps<Routes, "Login">) => {
               />
             )}
           />
-          <Box flexDirection="row" justifyContent="space-between">
+          <Box
+            flexDirection="row"
+            justifyContent="space-between"
+            marginVertical="s"
+            alignItems="center"
+          >
             <Controller
               control={control}
               name="remember"
@@ -116,12 +122,13 @@ const Login = ({ navigation }: StackNavigationProps<Routes, "Login">) => {
                 />
               )}
             />
-            <Button
-              variant="transparent"
+            <BorderlessButton
               onPress={() => navigation.navigate("ForgotPassword")}
             >
-              <Text color="primary">Forgot Password</Text>
-            </Button>
+              <Text variant="button" color="primary">
+                Forgot Password
+              </Text>
+            </BorderlessButton>
           </Box>
 
           <Box alignItems="center" marginTop="m">
