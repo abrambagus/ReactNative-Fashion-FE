@@ -4,12 +4,13 @@ import {
   StyleSheet,
   TextInputProps as RNTextInputProps,
 } from "react-native";
-import { Box, useTheme } from "../../../components";
 import { Feather as Icon } from "@expo/vector-icons";
 import { FieldError } from "react-hook-form";
+import { Box, useTheme } from "../Theme";
+import RoundedIcon from "../RoundedIcon";
 
 interface TextInputProps extends RNTextInputProps {
-  icon: string;
+  icon: keyof typeof Icon.glyphMap;
   touched?: boolean;
   error?: FieldError;
 }
@@ -43,22 +44,12 @@ const TextInput = forwardRef<RNTextInput, TextInputProps>(
           />
         </Box>
         {touched && (
-          <Box
-            height={SIZE}
-            width={SIZE}
-            borderRadius="m"
+          <RoundedIcon
+            name={!error ? "check" : "x"}
+            size={SIZE}
             backgroundColor={!error ? "primary" : "danger"}
-            justifyContent="center"
-            alignItems="center"
-            style={{ borderRadius: SIZE / 2 }}
-          >
-            <Icon
-              name={!error ? "check" : "x"}
-              color="white"
-              size={16}
-              style={{ textAlign: "center" }}
-            />
-          </Box>
+            color="white"
+          />
         )}
       </Box>
     );

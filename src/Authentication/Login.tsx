@@ -2,8 +2,8 @@ import React, { useRef } from "react";
 import { TextInput as RNTextInput } from "react-native";
 import * as Yup from "yup";
 import { Button, Box, Container, Text } from "../components";
-import TextInput from "./components/Form/TextInput";
-import Checkbox from "./components/Form/Checkbox";
+import TextInput from "../components/Form/TextInput";
+import Checkbox from "../components/Form/Checkbox";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -11,11 +11,11 @@ import Footer from "./components/Footer";
 import { Routes, StackNavigationProps } from "../components/Naviagtion";
 
 const LoginSchema = Yup.object().shape({
+  email: Yup.string().email("Invalid email").required("Required"),
   password: Yup.string()
     .min(2, "Too Short!")
     .max(50, "Too Long!")
     .required("Required"),
-  email: Yup.string().email("Invalid email").required("Required"),
 });
 
 const Login = ({ navigation }: StackNavigationProps<Routes, "Login">) => {
@@ -30,7 +30,7 @@ const Login = ({ navigation }: StackNavigationProps<Routes, "Login">) => {
   );
 
   const { handleSubmit, control, setValue } = useForm({
-    mode: "onChange",
+    mode: "all",
     defaultValues: {
       email: "",
       password: "",
@@ -42,7 +42,7 @@ const Login = ({ navigation }: StackNavigationProps<Routes, "Login">) => {
   const onSubmit = (data: any) => console.log(data);
 
   return (
-    <Container {...{ footer }}>
+    <Container pattern={0} {...{ footer }}>
       <Box padding="xl">
         <Text variant="title1" textAlign="center" marginBottom="l">
           Welcome Back

@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { TextInput as RNTextInput } from "react-native";
 import * as Yup from "yup";
 import { Button, Box, Container, Text } from "../components";
-import TextInput from "./components/Form/TextInput";
+import TextInput from "../components/Form/TextInput";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -33,7 +33,7 @@ const SignUp = ({ navigation }: StackNavigationProps<Routes, "SignUp">) => {
   );
 
   const { handleSubmit, control } = useForm({
-    mode: "onChange",
+    mode: "all",
     defaultValues: {
       email: "",
       password: "",
@@ -45,7 +45,7 @@ const SignUp = ({ navigation }: StackNavigationProps<Routes, "SignUp">) => {
   const onSubmit = (data: any) => console.log(data);
 
   return (
-    <Container {...{ footer }}>
+    <Container pattern={1} {...{ footer }}>
       <Box padding="xl">
         <Text variant="title1" textAlign="center" marginBottom="l">
           Create account
