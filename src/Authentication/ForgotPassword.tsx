@@ -4,7 +4,10 @@ import { Controller, useForm } from "react-hook-form";
 import { Linking } from "react-native";
 import * as Yup from "yup";
 import { Box, Button, Container, Text } from "../components";
-import { Routes, StackNavigationProps } from "../components/Naviagtion";
+import {
+  AuthenticationRoutes,
+  StackNavigationProps,
+} from "../components/Naviagtion";
 import Footer from "./components/Footer";
 import TextInput from "../components/Form/TextInput";
 
@@ -14,7 +17,7 @@ const ForgotPasswordSchema = Yup.object().shape({
 
 const ForgotPassword = ({
   navigation,
-}: StackNavigationProps<Routes, "ForgotPassword">) => {
+}: StackNavigationProps<AuthenticationRoutes, "ForgotPassword">) => {
   const footer = (
     <Footer
       title="Not working?"

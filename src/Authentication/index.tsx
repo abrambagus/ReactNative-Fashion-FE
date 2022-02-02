@@ -6,10 +6,10 @@ import Login from "./Login";
 import SignUp from "./SignUp";
 import PasswordChanged from "./PasswordChanged";
 import ForgotPassword from "./ForgotPassword";
-import { Routes } from "../components/Naviagtion";
+import { AuthenticationRoutes } from "../components/Naviagtion";
 export const assets = [...onBoaringAssets, ...WelcomeAssets];
 
-const AuthenticationStack = createStackNavigator<Routes>();
+const AuthenticationStack = createStackNavigator<AuthenticationRoutes>();
 
 export const AuthenticationNavigator = () => {
   return (

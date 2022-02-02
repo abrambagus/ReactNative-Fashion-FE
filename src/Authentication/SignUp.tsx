@@ -7,7 +7,10 @@ import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import Footer from "./components/Footer";
-import { Routes, StackNavigationProps } from "../components/Naviagtion";
+import {
+  AuthenticationRoutes,
+  StackNavigationProps,
+} from "../components/Naviagtion";
 
 const SignUpSchema = Yup.object().shape({
   password: Yup.string()
@@ -20,7 +23,9 @@ const SignUpSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
 });
 
-const SignUp = ({ navigation }: StackNavigationProps<Routes, "SignUp">) => {
+const SignUp = ({
+  navigation,
+}: StackNavigationProps<AuthenticationRoutes, "SignUp">) => {
   const password = useRef<RNTextInput>(null);
   const passwordConfirmation = useRef<RNTextInput>(null);
 

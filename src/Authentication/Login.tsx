@@ -8,8 +8,11 @@ import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import Footer from "./components/Footer";
-import { Routes, StackNavigationProps } from "../components/Naviagtion";
+import { AppRoutes, AuthenticationRoutes } from "../components/Naviagtion";
 import { BorderlessButton } from "react-native-gesture-handler";
+import { CompositeNavigationProp } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { DrawerNavigationProp } from "@react-navigation/drawer";
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
@@ -19,7 +22,14 @@ const LoginSchema = Yup.object().shape({
     .required("Required"),
 });
 
-const Login = ({ navigation }: StackNavigationProps<Routes, "Login">) => {
+interface LoginProps {
+  navigation: CompositeNavigationProp<
+    StackNavigationProp<AuthenticationRoutes, "Login">,
+    DrawerNavigationProp<AppRoutes, "Home">
+  >;
+}
+
+const Login = ({ navigation }: LoginProps) => {
   const password = useRef<RNTextInput>(null);
 
   const footer = (
@@ -40,7 +50,7 @@ const Login = ({ navigation }: StackNavigationProps<Routes, "Login">) => {
     resolver: yupResolver(LoginSchema),
   });
 
-  const onSubmit = (data: any) => console.log(data);
+  const onSubmit = () => navigation.navigate("Home");
 
   return (
     <Container pattern={0} {...{ footer }}>

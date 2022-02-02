@@ -7,11 +7,14 @@ import {
   RoundedIconButton,
   RoundedIcon,
 } from "../components";
-import { Routes, StackNavigationProps } from "../components/Naviagtion";
+import {
+  AuthenticationRoutes,
+  StackNavigationProps,
+} from "../components/Naviagtion";
 
 const PasswordChanged = ({
   navigation,
-}: StackNavigationProps<Routes, "PasswordChanged">) => {
+}: StackNavigationProps<AuthenticationRoutes, "PasswordChanged">) => {
   const SIZE = 80;
 
   return (

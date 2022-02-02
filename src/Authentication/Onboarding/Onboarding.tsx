@@ -10,7 +10,10 @@ import Animated, {
   interpolate,
   multiply,
 } from "react-native-reanimated";
-import { Routes, StackNavigationProps } from "../../components/Naviagtion";
+import {
+  AuthenticationRoutes,
+  StackNavigationProps,
+} from "../../components/Naviagtion";
 import { Theme } from "../../components/Theme";
 import { makeStyles, useTheme } from "../../components";
 
@@ -71,7 +74,7 @@ export const assets = slides.map((slide) => slide.picture.src);
 
 const Onboarding = ({
   navigation,
-}: StackNavigationProps<Routes, "Onboarding">) => {
+}: StackNavigationProps<AuthenticationRoutes, "Onboarding">) => {
   const styles = useStyles();
   const theme = useTheme();
   const scroll = useRef<Animated.ScrollView>(null);
