@@ -8,10 +8,10 @@ import { theme } from "./src/components/Theme";
 import { ThemeProvider } from "@shopify/restyle";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { createStackNavigator } from "@react-navigation/stack";
-import { HomeNavigator } from "./src/Home";
+import { HomeNavigator, assets as homeAssets } from "./src/Home";
 import { AppRoutes } from "./src/components/Naviagtion";
 
-const assets = [...authenticationAssets];
+const assets = [...authenticationAssets, ...homeAssets];
 
 const fonts = {
   "SFProDisplay-Bold": require("./assets/fonts/SF-Pro-Display-Bold.otf"),

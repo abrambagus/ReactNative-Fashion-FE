@@ -20,6 +20,7 @@ export const theme = createTheme({
     yellow: "#FFC641",
     pink: "#FF87A2",
     violet: "#442CB9",
+    lightGrey: "#FAFAFA",
   },
   spacing: {
     n: 0,
@@ -68,6 +69,12 @@ export const theme = createTheme({
       fontFamily: "SFProDisplay-Medium",
       color: "text",
       textAlign: "center",
+    },
+    header: {
+      fontSize: 12,
+      lineHeight: 24,
+      fontFamily: "SFProDisplay-Semibold",
+      color: "secondary",
     },
   },
   breakpoints: {},
