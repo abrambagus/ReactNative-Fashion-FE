@@ -8,11 +8,8 @@ import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import Footer from "./components/Footer";
-import { AppRoutes, AuthenticationRoutes } from "../components/Naviagtion";
+import { AuthNavigationProps } from "../components/Naviagtion";
 import { BorderlessButton } from "react-native-gesture-handler";
-import { CompositeNavigationProp } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { DrawerNavigationProp } from "@react-navigation/drawer";
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
@@ -22,14 +19,7 @@ const LoginSchema = Yup.object().shape({
     .required("Required"),
 });
 
-interface LoginProps {
-  navigation: CompositeNavigationProp<
-    StackNavigationProp<AuthenticationRoutes, "Login">,
-    DrawerNavigationProp<AppRoutes, "Home">
-  >;
-}
-
-const Login = ({ navigation }: LoginProps) => {
+const Login = ({ navigation }: AuthNavigationProps<"Login">) => {
   const password = useRef<RNTextInput>(null);
 
   const footer = (
@@ -54,100 +44,98 @@ const Login = ({ navigation }: LoginProps) => {
 
   return (
     <Container pattern={0} {...{ footer }}>
-      <Box padding="xl">
-        <Text variant="title1" textAlign="center" marginBottom="l">
-          Welcome Back
-        </Text>
-        <Text variant="body" textAlign="center" marginBottom="l">
-          Use your credentials below and login to your account.
-        </Text>
-        <Box>
-          <Box marginBottom="m">
-            <Controller
-              control={control}
-              name="email"
-              render={({
-                field: { onChange, onBlur, value },
-                fieldState: { isTouched, error },
-              }) => (
-                <TextInput
-                  icon="mail"
-                  placeholder="Enter your email"
-                  onChangeText={onChange}
-                  onBlur={onBlur}
-                  error={error}
-                  touched={isTouched}
-                  value={value}
-                  autoCompleteType="email"
-                  autoCapitalize="none"
-                  returnKeyType="next"
-                  returnKeyLabel="next"
-                  onSubmitEditing={() => password.current?.focus()}
-                />
-              )}
-            />
-          </Box>
+      <Text variant="title1" textAlign="center" marginBottom="l">
+        Welcome Back
+      </Text>
+      <Text variant="body" textAlign="center" marginBottom="l">
+        Use your credentials below and login to your account.
+      </Text>
+      <Box>
+        <Box marginBottom="m">
           <Controller
             control={control}
-            name="password"
+            name="email"
             render={({
               field: { onChange, onBlur, value },
               fieldState: { isTouched, error },
             }) => (
               <TextInput
-                ref={password}
-                icon="lock"
-                placeholder="Enter your password"
+                icon="mail"
+                placeholder="Enter your email"
                 onChangeText={onChange}
                 onBlur={onBlur}
                 error={error}
                 touched={isTouched}
                 value={value}
-                secureTextEntry
-                autoCompleteType="password"
+                autoCompleteType="email"
                 autoCapitalize="none"
-                returnKeyType="go"
-                returnKeyLabel="go"
-                onSubmitEditing={handleSubmit(onSubmit)}
+                returnKeyType="next"
+                returnKeyLabel="next"
+                onSubmitEditing={() => password.current?.focus()}
               />
             )}
           />
-          <Box
-            flexDirection="row"
-            justifyContent="space-between"
-            marginVertical="s"
-            alignItems="center"
+        </Box>
+        <Controller
+          control={control}
+          name="password"
+          render={({
+            field: { onChange, onBlur, value },
+            fieldState: { isTouched, error },
+          }) => (
+            <TextInput
+              ref={password}
+              icon="lock"
+              placeholder="Enter your password"
+              onChangeText={onChange}
+              onBlur={onBlur}
+              error={error}
+              touched={isTouched}
+              value={value}
+              secureTextEntry
+              autoCompleteType="password"
+              autoCapitalize="none"
+              returnKeyType="go"
+              returnKeyLabel="go"
+              onSubmitEditing={handleSubmit(onSubmit)}
+            />
+          )}
+        />
+        <Box
+          flexDirection="row"
+          justifyContent="space-between"
+          marginVertical="s"
+          alignItems="center"
+        >
+          <Controller
+            control={control}
+            name="remember"
+            rules={{
+              required: true,
+            }}
+            render={({ field: { value } }) => (
+              <Checkbox
+                label="Remember me"
+                checked={value}
+                onChange={(v: boolean) => setValue("remember", v)}
+              />
+            )}
+          />
+          <BorderlessButton
+            onPress={() => navigation.navigate("ForgotPassword")}
           >
-            <Controller
-              control={control}
-              name="remember"
-              rules={{
-                required: true,
-              }}
-              render={({ field: { value } }) => (
-                <Checkbox
-                  label="Remember me"
-                  checked={value}
-                  onChange={(v: boolean) => setValue("remember", v)}
-                />
-              )}
-            />
-            <BorderlessButton
-              onPress={() => navigation.navigate("ForgotPassword")}
-            >
-              <Text variant="button" color="primary">
-                Forgot Password
-              </Text>
-            </BorderlessButton>
-          </Box>
+            <Text variant="button" color="primary">
+              Forgot Password
+            </Text>
+          </BorderlessButton>
+        </Box>
 
-          <Box alignItems="center" marginTop="m">
-            <Button
-              variant="primary"
-              onPress={handleSubmit(onSubmit)}
-              label="Log into your account"
-            />
-          </Box>
+        <Box alignItems="center" marginTop="m">
+          <Button
+            variant="primary"
+            onPress={handleSubmit(onSubmit)}
+            label="Log into your account"
+          />
         </Box>
       </Box>
     </Container>
