@@ -1,5 +1,5 @@
 import React from "react";
-import { RectButton } from "react-native-gesture-handler";
+import { BorderlessButton } from "react-native-gesture-handler";
 import RoundIcon, { RoundedIconProps } from "./RoundedIcon";
 
 interface RoundedIconButtonProps extends RoundedIconProps {
@@ -8,9 +8,9 @@ interface RoundedIconButtonProps extends RoundedIconProps {
 
 const RoundedIconButton = ({ onPress, ...props }: RoundedIconButtonProps) => {
   return (
-    <RectButton {...{ onPress }}>
+    <BorderlessButton {...{ onPress }}>
       <RoundIcon {...props} />
-    </RectButton>
+    </BorderlessButton>
   );
 };
 

@@ -31,7 +31,7 @@ const step = 1 / (cards.length - 1);
 const OutfitIdeas = ({ navigation }: HomeNavigationProps<"OutfitIdeas">) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const aIndex = useTransition(currentIndex);
-  console.log(currentIndex);
+
   return (
     <Box flex={1} backgroundColor="white">
       <Header
