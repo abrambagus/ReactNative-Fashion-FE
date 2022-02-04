@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
-import { Box, Text } from "../../components";
-import BorderlessTap from "./BorderlessTap";
+import { BorderlessTap, Box, Text } from "../../components";
 
 interface CategoryProps {
   category: {
