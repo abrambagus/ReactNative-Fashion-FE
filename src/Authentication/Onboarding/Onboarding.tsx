@@ -10,7 +10,7 @@ import Animated, {
   interpolate,
   multiply,
 } from "react-native-reanimated";
-import { AuthNavigationProps } from "../../components/Naviagtion";
+import { AuthNavigationProps } from "../../components/Navigation";
 import { Theme } from "../../components/Theme";
 import { makeStyles, useTheme } from "../../components";
 

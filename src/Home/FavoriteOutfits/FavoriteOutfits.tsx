@@ -6,7 +6,7 @@ import {
   TransitioningView,
 } from "react-native-reanimated";
 import { Box, Header, useTheme } from "../../components";
-import { HomeNavigationProps } from "../../components/Naviagtion";
+import { HomeNavigationProps } from "../../components/Navigation";
 import Footer from "./Footer";
 import Outfit from "./Outfit";
 import TopCurve from "./TopCurve";

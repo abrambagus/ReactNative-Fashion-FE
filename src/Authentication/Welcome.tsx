@@ -1,7 +1,7 @@
 import React from "react";
 import { Image, Dimensions } from "react-native";
 import { Button } from "../components";
-import { AuthNavigationProps } from "../components/Naviagtion";
+import { AuthNavigationProps } from "../components/Navigation";
 import { Box, Text, useTheme } from "../components";
 import { BorderlessButton } from "react-native-gesture-handler";
 

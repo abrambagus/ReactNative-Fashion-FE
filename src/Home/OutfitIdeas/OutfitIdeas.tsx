@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { sub } from "react-native-reanimated";
 import { useTransition } from "react-native-redash";
 import { Box, Header } from "../../components";
-import { HomeNavigationProps } from "../../components/Naviagtion";
+import { HomeNavigationProps } from "../../components/Navigation";
 import Background from "./Background";
 import Card from "./Card";
 import Categories from "./Categories";

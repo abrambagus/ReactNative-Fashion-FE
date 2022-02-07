@@ -8,7 +8,7 @@ import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import Footer from "./components/Footer";
-import { AuthNavigationProps } from "../components/Naviagtion";
+import { AuthNavigationProps } from "../components/Navigation";
 import { BorderlessButton } from "react-native-gesture-handler";
 
 const LoginSchema = Yup.object().shape({

@@ -3,7 +3,7 @@ import { RectButton } from "react-native-gesture-handler";
 import { Feather as Icon } from "@expo/vector-icons";
 import { Theme } from "../../components/Theme";
 import { Box, RoundedIcon, Text, useTheme } from "../../components";
-import { HomeRoutes } from "../../components/Naviagtion";
+import { HomeRoutes } from "../../components/Navigation";
 import { useNavigation } from "@react-navigation/native";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
 

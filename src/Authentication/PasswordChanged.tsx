@@ -10,7 +10,7 @@ import {
 import {
   AuthenticationRoutes,
   StackNavigationProps,
-} from "../components/Naviagtion";
+} from "../components/Navigation";
 
 const PasswordChanged = ({
   navigation,

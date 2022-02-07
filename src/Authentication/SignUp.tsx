@@ -7,7 +7,7 @@ import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import Footer from "./components/Footer";
-import { AuthNavigationProps } from "../components/Naviagtion";
+import { AuthNavigationProps } from "../components/Navigation";
 
 const SignUpSchema = Yup.object().shape({
   password: Yup.string()

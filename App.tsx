@@ -9,7 +9,7 @@ import { ThemeProvider } from "@shopify/restyle";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { createStackNavigator } from "@react-navigation/stack";
 import { HomeNavigator, assets as homeAssets } from "./src/Home";
-import { AppRoutes } from "./src/components/Naviagtion";
+import { AppRoutes } from "./src/components/Navigation";
 
 const assets = [...authenticationAssets, ...homeAssets];
 

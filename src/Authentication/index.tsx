@@ -6,7 +6,7 @@ import Login from "./Login";
 import SignUp from "./SignUp";
 import PasswordChanged from "./PasswordChanged";
 import ForgotPassword from "./ForgotPassword";
-import { AuthenticationRoutes } from "../components/Naviagtion";
+import { AuthenticationRoutes } from "../components/Navigation";
 export const assets = [...onBoaringAssets, ...WelcomeAssets];
 
 const AuthenticationStack = createStackNavigator<AuthenticationRoutes>();
