@@ -7,14 +7,11 @@ import {
   RoundedIconButton,
   RoundedIcon,
 } from "../components";
-import {
-  AuthenticationRoutes,
-  StackNavigationProps,
-} from "../components/Navigation";
+import { AuthNavigationProps } from "../components/Navigation";
 
 const PasswordChanged = ({
   navigation,
-}: StackNavigationProps<AuthenticationRoutes, "PasswordChanged">) => {
+}: AuthNavigationProps<"PasswordChanged">) => {
   const SIZE = 80;
 
   return (
@@ -26,7 +23,7 @@ const PasswordChanged = ({
             name="x"
             size={60}
             color="secondary"
-            backgroundColor="white"
+            backgroundColor="background"
             onPress={() => navigation.pop()}
           />
         </Box>

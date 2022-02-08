@@ -48,7 +48,7 @@ const TextInput = forwardRef<RNTextInput, TextInputProps>(
             name={!error ? "check" : "x"}
             size={SIZE}
             backgroundColor={!error ? "primary" : "danger"}
-            color="white"
+            color="background"
           />
         )}
       </Box>

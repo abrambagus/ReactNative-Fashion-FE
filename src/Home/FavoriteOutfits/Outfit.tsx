@@ -31,7 +31,7 @@ const Outfit = ({ outfit, width }: OutfitProps) => {
           <RoundedIcon
             name="check"
             backgroundColor="primary"
-            color="white"
+            color="background"
             size={24}
           />
         )}

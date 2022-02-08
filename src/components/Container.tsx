@@ -34,7 +34,7 @@ const Container = ({ children, footer, pattern }: ContainerProps) => {
         }
         backgroundColor="secondary"
       >
-        <Box backgroundColor="white">
+        <Box backgroundColor="background">
           <Box
             borderBottomLeftRadius="xl"
             overflow="hidden"
@@ -63,7 +63,7 @@ const Container = ({ children, footer, pattern }: ContainerProps) => {
           <Box
             borderRadius="xl"
             borderTopLeftRadius="n"
-            backgroundColor="white"
+            backgroundColor="background"
             flex={1}
             justifyContent="center"
             padding="xl"

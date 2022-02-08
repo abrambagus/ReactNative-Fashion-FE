@@ -39,7 +39,7 @@ const FavoriteOutfits = ({
   );
   const list = useRef<TransitioningView>(null);
   return (
-    <Box flex={1} backgroundColor="white">
+    <Box flex={1} backgroundColor="background">
       <Header
         title="Favorite Outfits"
         left={{ icon: "menu", onPress: () => navigation.openDrawer() }}
