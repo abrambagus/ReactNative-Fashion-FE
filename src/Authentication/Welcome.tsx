@@ -3,7 +3,7 @@ import { Image, Dimensions } from "react-native";
 import { Button } from "../components";
 import { AuthNavigationProps } from "../components/Navigation";
 import { Box, Text, useTheme } from "../components";
-import { BorderlessButton } from "react-native-gesture-handler";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const picture = {
   src: require("../../assets/images/5.png"),
@@ -23,7 +23,7 @@ const Welcome = ({ navigation }: AuthNavigationProps<"Welcome">) => {
       <Box
         flex={1}
         borderBottomRightRadius="xl"
-        backgroundColor="grey"
+        backgroundColor="background2"
         alignItems="center"
         justifyContent="flex-end"
       >
@@ -39,7 +39,7 @@ const Welcome = ({ navigation }: AuthNavigationProps<"Welcome">) => {
       </Box>
       <Box flex={1} borderTopLeftRadius="xl">
         <Box
-          backgroundColor="grey"
+          backgroundColor="background2"
           position="absolute"
           top={0}
           left={0}
@@ -67,13 +67,13 @@ const Welcome = ({ navigation }: AuthNavigationProps<"Welcome">) => {
             label="Join us, it's free"
             onPress={() => navigation.navigate("SignUp")}
           />
-          <BorderlessButton
+          <TouchableOpacity
             onPress={() => navigation.navigate("ForgotPassword")}
           >
             <Text variant="button" color="secondary">
               Forgot password?
             </Text>
-          </BorderlessButton>
+          </TouchableOpacity>
         </Box>
       </Box>
     </Box>

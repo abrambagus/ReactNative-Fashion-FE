@@ -9,8 +9,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import Footer from "./components/Footer";
 import { AuthNavigationProps } from "../components/Navigation";
-import { BorderlessButton } from "react-native-gesture-handler";
 import { CommonActions } from "@react-navigation/native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
@@ -128,13 +128,13 @@ const Login = ({ navigation }: AuthNavigationProps<"Login">) => {
               />
             )}
           />
-          <BorderlessButton
+          <TouchableOpacity
             onPress={() => navigation.navigate("ForgotPassword")}
           >
             <Text variant="button" color="primary">
               Forgot Password
             </Text>
-          </BorderlessButton>
+          </TouchableOpacity>
         </Box>
 
         <Box alignItems="center" marginTop="m">

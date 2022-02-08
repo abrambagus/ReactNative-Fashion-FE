@@ -10,29 +10,33 @@ import { ImageStyle, TextStyle, ViewStyle } from "react-native";
 
 export const palette = {
   white: "white",
+  yellow: "#FFC641",
+  pink: "#FF87A2",
+  violet: "#442CB9",
+  lightBlue: "#BFEAF5",
+  orange: "#FE5E33",
+  green: "#2CB9B0",
 };
 
 const theme = createTheme({
   colors: {
-    primary: "#2CB9B0",
+    primary: palette.green,
     secondary: "#0C0D34",
     background: palette.white,
+    background2: "#F4F0EF",
+    info: "#808080",
     text: "rgba(12,13,52,0.7)",
-    grey: "rgba(12, 13, 52, 0.05)",
     transparent: "transparent",
     danger: "#FF0058",
     primaryLight: "#E7F9F7",
-    orange: "#FE5E33",
-    yellow: "#FFC641",
-    pink: "#FF87A2",
-    violet: "#442CB9",
-    lightGrey: "#FAFAFA",
-    lightBlue: "#BFEAF5",
-    darkGrey: "#808080",
-    // white: "white",
+    graph1: palette.orange,
+    graph2: palette.yellow,
+    drawer1: palette.orange,
+    drawer2: palette.yellow,
+    drawer3: palette.pink,
+    drawer4: palette.violet,
   },
   spacing: {
-    n: 0,
     s: 8,
     m: 16,
     l: 24,
@@ -41,7 +45,6 @@ const theme = createTheme({
   },
 
   borderRadii: {
-    n: 0,
     s: 4,
     m: 10,
     l: 25,

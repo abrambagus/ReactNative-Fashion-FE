@@ -1,13 +1,25 @@
 import { Dimensions } from "react-native";
-import React from "react";
+import React, { useLayoutEffect, useRef } from "react";
 import { Box, useTheme } from "../../../components";
 import { Theme } from "../../../components/Theme";
 import Underlay, { MARGIN } from "./Underlay";
 import { lerp } from "./Scale";
 import moment from "moment";
+import {
+  Transition,
+  Transitioning,
+  TransitioningView,
+} from "react-native-reanimated";
 
 const { width: wWidth } = Dimensions.get("window");
 const aspectRatio = 195 / 305;
+const transition = (
+  <Transition.In
+    type="slide-bottom"
+    durationMs={650}
+    interpolation="easeInOut"
+  />
+);
 
 export interface DataPoint {
   date: number;
@@ -34,6 +46,11 @@ const Graph = ({ data, startDate, numberOfMonths }: GraphProps) => {
   const minY = Math.min(...values);
   const maxY = Math.max(...values);
 
+  const ref = useRef<TransitioningView>(null);
+  useLayoutEffect(() => {
+    ref.current?.animateNextTransition();
+  }, []);
+
   return (
     <Box paddingBottom={MARGIN} paddingLeft={MARGIN} marginTop="xl">
       <Underlay
@@ -43,7 +60,11 @@ const Graph = ({ data, startDate, numberOfMonths }: GraphProps) => {
         numberOfMonths={numberOfMonths}
         step={step}
       />
-      <Box width={width} height={height}>
+      <Transitioning.View
+        style={{ width, height, overflow: "hidden" }}
+        ref={ref}
+        transition={transition}
+      >
         {data.map((point) => {
           const i = Math.round(
             moment.duration(moment(point.date).diff(startDate)).asMonths()
@@ -80,7 +101,7 @@ const Graph = ({ data, startDate, numberOfMonths }: GraphProps) => {
             </Box>
           );
         })}
-      </Box>
+      </Transitioning.View>
     </Box>
   );
 };

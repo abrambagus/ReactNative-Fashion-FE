@@ -1,7 +1,7 @@
 import React from "react";
-import { BorderlessButton } from "react-native-gesture-handler";
 import { Feather as Icon } from "@expo/vector-icons";
 import { Box, Text } from "../Theme";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 interface CheckboxProps {
   label: string;
@@ -11,7 +11,7 @@ interface CheckboxProps {
 
 const Checkbox = ({ label, onChange, checked }: CheckboxProps) => {
   return (
-    <BorderlessButton
+    <TouchableOpacity
       onPress={() => onChange(!checked)}
       style={{ justifyContent: "center" }}
     >
@@ -31,7 +31,7 @@ const Checkbox = ({ label, onChange, checked }: CheckboxProps) => {
         </Box>
         <Text variant="button">{label}</Text>
       </Box>
-    </BorderlessButton>
+    </TouchableOpacity>
   );
 };
 
