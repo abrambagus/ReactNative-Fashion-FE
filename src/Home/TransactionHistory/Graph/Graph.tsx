@@ -12,13 +12,16 @@ export interface DataPoint {
   date: number;
   value: number;
   color: keyof Theme["colors"];
+  id: number;
 }
 
 interface GraphProps {
   data: DataPoint[];
+  startDate: number;
+  numberOfMonths: number;
 }
 
-const Graph = ({ data }: GraphProps) => {
+const Graph = ({ data, startDate, numberOfMonths }: GraphProps) => {
   const theme = useTheme();
   const canvasWidth = wWidth - theme.spacing.m * 2;
   const canvasHeight = canvasWidth * aspectRatio;
@@ -26,21 +29,22 @@ const Graph = ({ data }: GraphProps) => {
   const height = canvasHeight - theme.spacing[MARGIN];
 
   const values = data.map((p) => p.value);
-  const step = width / data.length;
-  const dates = data.map((p) => p.date);
-  // const minX = Math.min(...dates);
-  // const maxX = Math.max(...dates);
+  const step = width / numberOfMonths;
   const minY = Math.min(...values);
   const maxY = Math.max(...values);
 
   return (
     <Box paddingBottom={MARGIN} paddingLeft={MARGIN} marginTop="xl">
-      <Underlay dates={dates} minY={minY} maxY={maxY} step={step} />
+      <Underlay
+        minY={minY}
+        maxY={maxY}
+        startDate={startDate}
+        numberOfMonths={numberOfMonths}
+        step={step}
+      />
       <Box width={width} height={height}>
-        {data.map((point, i) => {
-          if (point.value === 0) {
-            return null;
-          }
+        {data.map((point) => {
+          const i = new Date(point.date - startDate).getMonth();
           return (
             <Box
               position="absolute"
@@ -48,7 +52,7 @@ const Graph = ({ data }: GraphProps) => {
               bottom={0}
               width={step}
               height={lerp(0, height, point.value / maxY)}
-              key={point.date}
+              key={point.id}
             >
               <Box
                 position="absolute"
