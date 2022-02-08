@@ -1,10 +1,13 @@
 import React from "react";
-import { ScrollView } from "react-native";
+import { ScrollView, Image, StyleSheet, Dimensions } from "react-native";
 import { Box, Header, Text } from "../../components";
 import { HomeNavigationProps } from "../../components/Navigation";
 import Transaction from "./Transaction";
 import Graph, { DataPoint } from "./Graph";
+import { makeStyles, Theme } from "../../components/Theme";
+import TopCurve from "./TopCurve";
 
+const footerHeight = Dimensions.get("window").width / 3;
 const startDate = new Date("2019-09-01").getTime();
 const numberOfMonths = 6;
 
@@ -16,7 +19,7 @@ const data: DataPoint[] = [
     id: 245672,
   },
   {
-    date: new Date("2019-11-01").getTime(),
+    date: new Date("2019-10-01").getTime(),
     value: 281.23,
     color: "orange",
     id: 245673,
@@ -32,6 +35,8 @@ const data: DataPoint[] = [
 const TransactionHistory = ({
   navigation,
 }: HomeNavigationProps<"TransactionHistory">) => {
+  const styles = useStyles();
+
   return (
     <Box flex={1} backgroundColor="white">
       <Header
@@ -60,14 +65,42 @@ const TransactionHistory = ({
           startDate={startDate}
           numberOfMonths={numberOfMonths}
         />
-        <ScrollView>
+        <ScrollView
+          contentContainerStyle={styles.scrollView}
+          showsVerticalScrollIndicator={false}
+        >
           {data.map((transaction) => (
             <Transaction key={transaction.id} transaction={transaction} />
           ))}
         </ScrollView>
       </Box>
+      <TopCurve {...{ footerHeight }} />
+      <Box
+        position="absolute"
+        left={0}
+        right={0}
+        bottom={0}
+        height={footerHeight}
+      >
+        <Image
+          style={styles.footer}
+          source={require("../../../assets/images/patterns/1.png")}
+        />
+      </Box>
     </Box>
   );
 };
+
+const useStyles = makeStyles((theme: Theme) => ({
+  footer: {
+    ...StyleSheet.absoluteFillObject,
+    width: undefined,
+    height: undefined,
+    borderTopLeftRadius: theme.borderRadii.xl,
+  },
+  scrollView: {
+    paddingBottom: footerHeight,
+  },
+}));
 
 export default TransactionHistory;

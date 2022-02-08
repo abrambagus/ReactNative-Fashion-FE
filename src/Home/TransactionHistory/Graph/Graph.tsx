@@ -4,6 +4,7 @@ import { Box, useTheme } from "../../../components";
 import { Theme } from "../../../components/Theme";
 import Underlay, { MARGIN } from "./Underlay";
 import { lerp } from "./Scale";
+import moment from "moment";
 
 const { width: wWidth } = Dimensions.get("window");
 const aspectRatio = 195 / 305;
@@ -44,7 +45,9 @@ const Graph = ({ data, startDate, numberOfMonths }: GraphProps) => {
       />
       <Box width={width} height={height}>
         {data.map((point) => {
-          const i = new Date(point.date - startDate).getMonth();
+          const i = Math.round(
+            moment.duration(moment(point.date).diff(startDate)).asMonths()
+          );
           return (
             <Box
               position="absolute"
