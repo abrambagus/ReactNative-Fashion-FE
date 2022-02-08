@@ -10,6 +10,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Footer from "./components/Footer";
 import { AuthNavigationProps } from "../components/Navigation";
 import { BorderlessButton } from "react-native-gesture-handler";
+import { CommonActions } from "@react-navigation/native";
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
@@ -40,7 +41,13 @@ const Login = ({ navigation }: AuthNavigationProps<"Login">) => {
     resolver: yupResolver(LoginSchema),
   });
 
-  const onSubmit = () => navigation.navigate("Home");
+  const onSubmit = () =>
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{ name: "Home" }],
+      })
+    );
 
   return (
     <Container pattern={0} {...{ footer }}>

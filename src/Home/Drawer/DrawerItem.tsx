@@ -7,21 +7,34 @@ import { HomeRoutes } from "../../components/Navigation";
 import { useNavigation } from "@react-navigation/native";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
 
-export interface DrawerItemProps {
+interface BaseDrawerItem {
   icon: keyof typeof Icon.glyphMap;
-  color: keyof Theme["colors"];
-  screen: keyof HomeRoutes;
   label: string;
+  color: keyof Theme["colors"];
 }
 
-const DrawerItem = ({ icon, label, screen, color }: DrawerItemProps) => {
+interface ScreenDrawerItem extends BaseDrawerItem {
+  screen: keyof HomeRoutes;
+}
+
+interface OnPressDrawerItem extends BaseDrawerItem {
+  onPress: (navigation: ReturnType<typeof useNavigation>) => void;
+}
+
+export type DrawerItemProps = ScreenDrawerItem | OnPressDrawerItem;
+
+const DrawerItem = ({ icon, label, color, ...props }: DrawerItemProps) => {
   const theme = useTheme();
-  const { navigate } =
+  const navigation =
     useNavigation<DrawerNavigationProp<HomeRoutes, "OutfitIdeas">>();
 
   return (
     <RectButton
-      onPress={() => navigate(screen)}
+      onPress={() =>
+        "screen" in props
+          ? navigation.navigate(props.screen)
+          : props.onPress(navigation)
+      }
       style={{ borderRadius: theme.borderRadii.m }}
     >
       <Box flexDirection="row" alignItems="center" padding="m">
