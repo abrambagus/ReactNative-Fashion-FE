@@ -22,6 +22,7 @@ export const theme = createTheme({
     violet: "#442CB9",
     lightGrey: "#FAFAFA",
     lightBlue: "#BFEAF5",
+    darkGrey: "#808080",
   },
   spacing: {
     n: 0,

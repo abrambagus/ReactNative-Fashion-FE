@@ -37,7 +37,6 @@ const FavoriteOutfits = ({
     </Transition.Together>
   );
   const list = useRef<TransitioningView>(null);
-
   return (
     <Box flex={1} backgroundColor="white">
       <Header
