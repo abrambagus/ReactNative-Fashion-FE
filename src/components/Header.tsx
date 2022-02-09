@@ -3,6 +3,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Feather as Icon } from "@expo/vector-icons";
 import { Box, Text } from "./Theme";
 import RoundedIconButton from "./RoundedIconButton";
+import { View } from "react-native";
 
 interface HeaderProps {
   left: {
@@ -10,7 +11,7 @@ interface HeaderProps {
     onPress: () => void;
   };
   title: string;
-  right: {
+  right?: {
     icon: keyof typeof Icon.glyphMap;
     onPress: () => void;
   };
@@ -41,14 +42,18 @@ const Header = ({ left, title, right, dark }: HeaderProps) => {
       <Text variant="header" {...{ color }}>
         {title.toUpperCase()}
       </Text>
-      <RoundedIconButton
-        name={right.icon}
-        iconRatio={0.4}
-        onPress={right.onPress}
-        size={44}
-        align={backgroundColor === undefined ? "flex-end" : "center"}
-        {...{ color, backgroundColor }}
-      />
+      {right ? (
+        <RoundedIconButton
+          name={right.icon}
+          iconRatio={0.4}
+          onPress={right.onPress}
+          size={44}
+          align={backgroundColor === undefined ? "flex-end" : "center"}
+          {...{ color, backgroundColor }}
+        />
+      ) : (
+        <View style={{ width: 44 }} />
+      )}
     </Box>
   );
 };
