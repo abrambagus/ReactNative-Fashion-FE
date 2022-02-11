@@ -6,7 +6,10 @@ import {
   ThemeProvider as ReStyleThemeProvider,
 } from "@shopify/restyle";
 import React, { ReactNode } from "react";
-import { ImageStyle, TextStyle, ViewStyle } from "react-native";
+import { Dimensions, ImageStyle, TextStyle, ViewStyle } from "react-native";
+
+const { width } = Dimensions.get("window");
+export const aspectRatio = width / 374;
 
 export const palette = {
   white: "white",

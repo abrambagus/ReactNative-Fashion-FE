@@ -6,7 +6,7 @@ export interface RoundedIconProps {
   name: keyof typeof Icon.glyphMap;
   size: number;
   color: keyof Theme["colors"];
-  backgroundColor: keyof Theme["colors"] | undefined;
+  backgroundColor?: keyof Theme["colors"];
   iconRatio: number;
   align: "center" | "flex-start" | "flex-end";
 }
