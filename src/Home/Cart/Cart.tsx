@@ -30,10 +30,6 @@ const Cart = ({ navigation }: HomeNavigationProps<"Cart">) => {
       </Box>
       <Box flex={1}>
         <ScrollView
-          style={{
-            borderBottomLeftRadius: theme.borderRadii.xl,
-            borderBottomRightRadius: theme.borderRadii.xl,
-          }}
           contentContainerStyle={{ paddingVertical: 50 * aspectRatio }}
           showsVerticalScrollIndicator={false}
         >

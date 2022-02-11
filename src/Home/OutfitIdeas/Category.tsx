@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
-import { BorderlessTap, Box, Text } from "../../components";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { Box, Text } from "../../components";
 
 interface CategoryProps {
   category: {
@@ -19,7 +20,7 @@ const Category = ({
   const [selected, setSelected] = useState(false);
 
   return (
-    <BorderlessTap onPress={() => setSelected((prev) => !prev)}>
+    <TouchableOpacity onPress={() => setSelected((prev) => !prev)}>
       <Box marginLeft="m" alignItems="center" marginTop="s">
         <Box
           width={OUTER_RADIUS * 2}
@@ -50,7 +51,7 @@ const Category = ({
           {title}
         </Text>
       </Box>
-    </BorderlessTap>
+    </TouchableOpacity>
   );
 };
 

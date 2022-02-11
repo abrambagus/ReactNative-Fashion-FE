@@ -1,6 +1,9 @@
 import React, { ReactNode } from "react";
 import { Dimensions, View } from "react-native";
-import { PanGestureHandler } from "react-native-gesture-handler";
+import {
+  PanGestureHandler,
+  PanGestureHandlerGestureEvent,
+} from "react-native-gesture-handler";
 import Animated, {
   useAnimatedGestureHandler,
   useAnimatedStyle,
@@ -11,20 +14,24 @@ import { clamp, snapPoint } from "react-native-redash";
 
 import { Box, useTheme } from "../../components";
 
+interface CartContainerProps {
+  children: ReactNode;
+}
+
 const { width } = Dimensions.get("window");
 const aspectRatio = width / 375;
 const height = 682 * aspectRatio;
 const minHeight = 228 * aspectRatio;
 const snapPoints = [-(height - minHeight), 0];
 
-interface CartContainerProps {
-  children: ReactNode;
-}
-
 const CartContainer = ({ children }: CartContainerProps) => {
   const theme = useTheme();
+
   const translateY = useSharedValue(0);
-  const onGestureEvent = useAnimatedGestureHandler<{ y: number }>({
+  const onGestureEvent = useAnimatedGestureHandler<
+    PanGestureHandlerGestureEvent,
+    { y: number }
+  >({
     onStart: (event, ctx) => {
       ctx.y = translateY.value;
     },
@@ -46,24 +53,25 @@ const CartContainer = ({ children }: CartContainerProps) => {
 
   return (
     <Box flex={1} backgroundColor="secondary">
-      <PanGestureHandler onGestureEvent={onGestureEvent}>
-        <Animated.View
-          style={[
-            {
-              position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
-              height,
-              backgroundColor: "white",
-              borderBottomLeftRadius: theme.borderRadii.xl,
-              borderBottomRightRadius: theme.borderRadii.xl,
-            },
-            style,
-          ]}
-        >
-          {children}
-          <View
+      <Animated.View
+        style={[
+          {
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            height,
+            backgroundColor: "white",
+            overflow: "hidden",
+            borderBottomLeftRadius: theme.borderRadii.xl,
+            borderBottomRightRadius: theme.borderRadii.xl,
+          },
+          style,
+        ]}
+      >
+        {children}
+        <PanGestureHandler onGestureEvent={onGestureEvent}>
+          <Animated.View
             style={{
               position: "absolute",
               bottom: 0,
@@ -83,9 +91,9 @@ const CartContainer = ({ children }: CartContainerProps) => {
                 marginBottom: theme.spacing.m,
               }}
             />
-          </View>
-        </Animated.View>
-      </PanGestureHandler>
+          </Animated.View>
+        </PanGestureHandler>
+      </Animated.View>
     </Box>
   );
 };

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { BorderlessTap, Box, RoundedIcon } from "../../components";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { Box, RoundedIcon } from "../../components";
 
 interface OutfitProps {
   outfit: { id: number; color: string; aspectRatio: number; selected: boolean };
@@ -15,7 +16,7 @@ const Outfit = ({ outfit, width }: OutfitProps) => {
   };
 
   return (
-    <BorderlessTap onPress={outfitSelected}>
+    <TouchableOpacity onPress={outfitSelected}>
       <Box
         borderRadius="s"
         marginBottom="m"
@@ -36,7 +37,7 @@ const Outfit = ({ outfit, width }: OutfitProps) => {
           />
         )}
       </Box>
-    </BorderlessTap>
+    </TouchableOpacity>
   );
 };
 
