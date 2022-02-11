@@ -11,19 +11,18 @@ import { clamp, snapPoint } from "react-native-redash";
 
 import { Box, useTheme } from "../../components";
 
+const { width } = Dimensions.get("window");
+const aspectRatio = width / 375;
+const height = 682 * aspectRatio;
+const minHeight = 228 * aspectRatio;
+const snapPoints = [-(height - minHeight), 0];
+
 interface CartContainerProps {
   children: ReactNode;
 }
 
-const { width } = Dimensions.get("window");
-const aspectRatio = width / 375;
-const height = 582 * aspectRatio;
-const minHeight = 228 * aspectRatio;
-const snapPoints = [-(height - minHeight), 0];
-
 const CartContainer = ({ children }: CartContainerProps) => {
   const theme = useTheme();
-
   const translateY = useSharedValue(0);
   const onGestureEvent = useAnimatedGestureHandler<{ y: number }>({
     onStart: (event, ctx) => {
@@ -36,10 +35,10 @@ const CartContainer = ({ children }: CartContainerProps) => {
         snapPoints[1]
       );
     },
-    onEnd: ({ velocityY }) => {
-      // const dest = snapPoint(translateY.value, velocityY, snapPoints);
-      // translateY.value = withSpring(dest, { overshootClamping: true });
-    },
+    // onEnd: ({ velocityY }) => {
+    //   const dest = snapPoint(translateY.value, velocityY, snapPoints);
+    //   translateY.value = withSpring(dest, { overshootClamping: true });
+    // },
   });
   const style = useAnimatedStyle(() => ({
     transform: [{ translateY: translateY.value }],

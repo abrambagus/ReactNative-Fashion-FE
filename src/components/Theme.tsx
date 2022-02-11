@@ -9,7 +9,7 @@ import React, { ReactNode } from "react";
 import { Dimensions, ImageStyle, TextStyle, ViewStyle } from "react-native";
 
 const { width } = Dimensions.get("window");
-export const aspectRatio = width / 374;
+export const aspectRatio = width / 375;
 
 export const palette = {
   white: "white",
@@ -29,6 +29,7 @@ const theme = createTheme({
     background2: "#F4F0EF",
     info: "#808080",
     text: "rgba(12,13,52,0.7)",
+    edit: palette.lightBlue,
     transparent: "transparent",
     danger: "#FF0058",
     primaryLight: "#E7F9F7",
