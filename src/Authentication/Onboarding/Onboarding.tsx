@@ -12,6 +12,7 @@ import Animated, {
 import { AuthNavigationProps } from "../../components/Navigation";
 import { Theme } from "../../components/Theme";
 import { makeStyles } from "../../components";
+import ImageSlider from "./ImageSlider";
 
 const { width } = Dimensions.get("window");
 
@@ -99,32 +100,16 @@ const Onboarding = ({ navigation }: AuthNavigationProps<"Onboarding">) => {
   return (
     <View style={styles.container}>
       <Animated.View style={[styles.slider, animatedBackgroundColor]}>
-        {/* {slides.map(({ picture }, index) => {
-          const style = useAnimatedStyle(() => {
-            const opacity = interpolate(
-              x.value / width,
-              [index - 1, index, index + 1],
-              [0, 1, 0],
-              Extrapolate.CLAMP
-            );
-            return {
-              opacity,
-            };
-          });
+        {slides.map(({ picture }, index) => {
           return (
-            <Animated.View style={[styles.underlay, { opacity }]} key={index}>
-              <Image
-                source={picture.src}
-                style={{
-                  width: width - theme.borderRadii.xl,
-                  height:
-                    ((width - theme.borderRadii.xl) * picture.height) /
-                    picture.width,
-                }}
-              />
-            </Animated.View>
+            <ImageSlider
+              key={index}
+              index={index}
+              currentIndex={x}
+              picture={picture}
+            />
           );
-        })} */}
+        })}
         <Animated.ScrollView
           ref={scroll}
           horizontal
@@ -213,14 +198,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
-  },
-
-  underlay: {
-    ...StyleSheet.absoluteFillObject,
-    justifyContent: "flex-end",
-    alignItems: "center",
-    borderBottomRightRadius: theme.borderRadii.xl,
-    overflow: "hidden",
   },
 }));
 
