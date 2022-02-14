@@ -1,12 +1,15 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useCallback } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
-import { PanGestureHandler } from "react-native-gesture-handler";
+import {
+  PanGestureHandler,
+  PanGestureHandlerGestureEvent,
+} from "react-native-gesture-handler";
 import Animated, {
-  Transition,
   useAnimatedGestureHandler,
   useAnimatedStyle,
   useSharedValue,
   withSpring,
+  withTiming,
 } from "react-native-reanimated";
 import { snapPoint } from "react-native-redash";
 import { LinearGradient } from "expo-linear-gradient";
@@ -17,6 +20,7 @@ import { aspectRatio } from "../../components/Theme";
 interface SwipeableRowProps {
   children: ReactNode;
   onDelete: () => void;
+  height: number;
 }
 
 const { width } = Dimensions.get("window");
@@ -24,10 +28,22 @@ const finalDestination = width;
 const editWidth = 85 * aspectRatio;
 const snapPoints = [-editWidth, 0, finalDestination];
 
-const SwipeableRow = ({ children, onDelete }: SwipeableRowProps) => {
+const SwipeableRow = ({
+  children,
+  onDelete,
+  height: defaultHeight,
+}: SwipeableRowProps) => {
   const theme = useTheme();
   const translateX = useSharedValue(0);
-  const onGestureEvent = useAnimatedGestureHandler<{ x: number }>({
+  const height = useSharedValue(defaultHeight);
+  const deleteItem = useCallback(() => {
+    onDelete();
+  }, [onDelete]);
+
+  const onGestureEvent = useAnimatedGestureHandler<
+    PanGestureHandlerGestureEvent,
+    { x: number }
+  >({
     onStart: (_, ctx) => {
       ctx.x = translateX.value;
     },
@@ -43,7 +59,7 @@ const SwipeableRow = ({ children, onDelete }: SwipeableRowProps) => {
     //     },
     //     () => {
     //       if (dest === finalDestination) {
-    //         onDelete();
+    //         height.value = withTiming(0, { duration: 250 }, () => deleteItem());
     //       }
     //     }
     //   );

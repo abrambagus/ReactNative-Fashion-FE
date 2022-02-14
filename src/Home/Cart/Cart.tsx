@@ -7,6 +7,7 @@ import { HomeNavigationProps } from "../../components/Navigation";
 import { aspectRatio } from "../../components/Theme";
 import CartContainer from "./CartContainer";
 import Item from "./Item";
+import Checkout from "./Checkout";
 
 const height = 100 * aspectRatio;
 const d = "M 0 0 A 50 50 0 0 0 50 50 H 325 A 50 50 0 0 1 375 100 V 0 Z";
@@ -18,7 +19,7 @@ const Cart = ({ navigation }: HomeNavigationProps<"Cart">) => {
   const [items, setItems] = useState(defaultItems);
 
   return (
-    <CartContainer>
+    <CartContainer CheckoutComponent={Checkout}>
       <Box>
         <Box backgroundColor="primary">
           <Header
