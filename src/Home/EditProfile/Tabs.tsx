@@ -2,8 +2,11 @@ import React, { Children, useState } from "react";
 import { ReactNode } from "react";
 import { Dimensions } from "react-native";
 import { RectButton } from "react-native-gesture-handler";
-import Animated, { useAnimatedStyle } from "react-native-reanimated";
-import { mix, useTiming } from "react-native-redash";
+import Animated, {
+  useAnimatedStyle,
+  useDerivedValue,
+} from "react-native-reanimated";
+import { mix } from "react-native-redash";
 import { Box, Text, useTheme } from "../../components";
 
 const { width } = Dimensions.get("window");
@@ -21,7 +24,10 @@ interface TabsProps {
 const Tabs = ({ tabs, children }: TabsProps) => {
   const theme = useTheme();
   const [index, setIndex] = useState(0);
-  const transition = useTiming(index);
+  const transition = useDerivedValue(() => {
+    return index;
+  });
+
   const dot = useAnimatedStyle(() => ({
     transform: [
       { translateX: mix(transition.value, width * 0.25, width * 0.75) },
