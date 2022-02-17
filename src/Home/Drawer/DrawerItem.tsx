@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { RectButton } from "react-native-gesture-handler";
 import { Feather as Icon } from "@expo/vector-icons";
 import { Theme } from "../../components/Theme";
@@ -6,6 +6,7 @@ import { Box, RoundedIcon, Text, useTheme } from "../../components";
 import { HomeRoutes } from "../../components/Navigation";
 import { useNavigation } from "@react-navigation/native";
 import { DrawerNavigationProp } from "@react-navigation/drawer";
+import { AuthContext } from "../../Services";
 
 interface BaseDrawerItem {
   icon: keyof typeof Icon.glyphMap;
@@ -24,16 +25,20 @@ interface OnPressDrawerItem extends BaseDrawerItem {
 export type DrawerItemProps = ScreenDrawerItem | OnPressDrawerItem;
 
 const DrawerItem = ({ icon, label, color, ...props }: DrawerItemProps) => {
+  const { logout } = useContext(AuthContext);
   const theme = useTheme();
   const navigation =
     useNavigation<DrawerNavigationProp<HomeRoutes, "OutfitIdeas">>();
 
+  const onLogout = (props: any) => {
+    logout();
+    props.onPress(navigation);
+  };
+
   return (
     <RectButton
       onPress={() =>
-        "screen" in props
-          ? navigation.navigate(props.screen)
-          : props.onPress(navigation)
+        "screen" in props ? navigation.navigate(props.screen) : onLogout(props)
       }
       style={{ borderRadius: theme.borderRadii.m }}
     >

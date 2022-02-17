@@ -97,6 +97,12 @@ const theme = createTheme({
       fontFamily: "SFProDisplay-Semibold",
       color: "secondary",
     },
+    error: {
+      fontSize: 15,
+      fontFamily: "SFProDisplay-Medium",
+      color: "danger",
+      textAlign: "center",
+    },
   },
   breakpoints: {},
 });

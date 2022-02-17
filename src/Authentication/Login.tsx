@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { TextInput as RNTextInput } from "react-native";
 import * as Yup from "yup";
 import { Button, Box, Container, Text } from "../components";
@@ -6,11 +6,12 @@ import TextInput from "../components/Form/TextInput";
 import Checkbox from "../components/Form/Checkbox";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import Footer from "./components/Footer";
 import { AuthNavigationProps } from "../components/Navigation";
 import { CommonActions } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { AuthContext } from "../Services";
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
@@ -22,6 +23,7 @@ const LoginSchema = Yup.object().shape({
 
 const Login = ({ navigation }: AuthNavigationProps<"Login">) => {
   const password = useRef<RNTextInput>(null);
+  const { login } = useContext(AuthContext);
 
   const footer = (
     <Footer
@@ -41,13 +43,27 @@ const Login = ({ navigation }: AuthNavigationProps<"Login">) => {
     resolver: yupResolver(LoginSchema),
   });
 
-  const onSubmit = () =>
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 0,
-        routes: [{ name: "Home" }],
-      })
-    );
+  useEffect(() => {
+    (async () => {
+      const rememberMeEmail = await AsyncStorage.getItem("remember");
+      if (rememberMeEmail) {
+        setValue("email", rememberMeEmail);
+        setValue("remember", true);
+      }
+    })();
+  }, []);
+
+  const onSubmit = async (data: any) => {
+    const userLogin = await login(data);
+    if (userLogin) {
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{ name: "Home" }],
+        })
+      );
+    }
+  };
 
   return (
     <Container pattern={0} {...{ footer }}>
@@ -136,7 +152,6 @@ const Login = ({ navigation }: AuthNavigationProps<"Login">) => {
             </Text>
           </TouchableOpacity>
         </Box>
-
         <Box alignItems="center" marginTop="m">
           <Button
             variant="primary"
