@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useContext, useRef } from "react";
 import { TextInput as RNTextInput } from "react-native";
 import * as Yup from "yup";
 import { Button, Box, Container, Text } from "../components";
@@ -8,6 +8,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import Footer from "./components/Footer";
 import { AuthNavigationProps } from "../components/Navigation";
+import { AuthContext } from "../Services";
 
 const SignUpSchema = Yup.object().shape({
   password: Yup.string()
@@ -23,6 +24,7 @@ const SignUpSchema = Yup.object().shape({
 const SignUp = ({ navigation }: AuthNavigationProps<"SignUp">) => {
   const password = useRef<RNTextInput>(null);
   const passwordConfirmation = useRef<RNTextInput>(null);
+  const { signUp, errorSignUp } = useContext(AuthContext);
 
   const footer = (
     <Footer
@@ -42,9 +44,11 @@ const SignUp = ({ navigation }: AuthNavigationProps<"SignUp">) => {
     resolver: yupResolver(SignUpSchema),
   });
 
-  const onSubmit = (data: any) => {
-    console.log(data);
-    navigation.navigate("SignUpSuccess");
+  const onSubmit = async (data: any) => {
+    const userSignUp = await signUp(data);
+    if (userSignUp) {
+      navigation.navigate("SignUpSuccess");
+    }
   };
 
   return (
@@ -135,7 +139,11 @@ const SignUp = ({ navigation }: AuthNavigationProps<"SignUp">) => {
             />
           )}
         />
-
+        {errorSignUp ? (
+          <Box alignItems="center">
+            <Text variant="error">{errorSignUp}</Text>
+          </Box>
+        ) : null}
         <Box alignItems="center" marginTop="m">
           <Button
             variant="primary"
