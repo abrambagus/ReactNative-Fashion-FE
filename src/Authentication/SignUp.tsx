@@ -42,7 +42,10 @@ const SignUp = ({ navigation }: AuthNavigationProps<"SignUp">) => {
     resolver: yupResolver(SignUpSchema),
   });
 
-  const onSubmit = (data: any) => console.log(data);
+  const onSubmit = (data: any) => {
+    console.log(data);
+    navigation.navigate("SignUpSuccess");
+  };
 
   return (
     <Container pattern={1} {...{ footer }}>

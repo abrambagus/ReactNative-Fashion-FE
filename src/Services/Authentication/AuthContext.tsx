@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { createContext, ReactNode } from "react";
+import React, { createContext, ReactNode, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const AuthContext = createContext<any>({});
@@ -15,6 +15,9 @@ interface Login {
 }
 
 export const AuthContextProvider = ({ children }: AuthProviderProps) => {
+  const [user, setUser] = useState(null);
+  const [errorLogin, setErrorLogin] = useState("");
+
   const rememberMeEmail = async (remember: boolean, email?: string) => {
     if (remember && email) {
       await AsyncStorage.setItem("remember", email);
@@ -35,10 +38,12 @@ export const AuthContextProvider = ({ children }: AuthProviderProps) => {
       .post("http://192.168.18.8:8000/api/login", { email, password })
       .then(async (res) => {
         resUser = res.data.user;
+        setUser(resUser);
         await AsyncStorage.setItem("token", res.data.token);
+        setErrorLogin("");
       })
       .catch((err) => {
-        console.log(err.response.data.message);
+        setErrorLogin(err.response.data.message);
       });
     return resUser;
   };
@@ -51,7 +56,7 @@ export const AuthContextProvider = ({ children }: AuthProviderProps) => {
   };
 
   return (
-    <AuthContext.Provider value={{ login, logout }}>
+    <AuthContext.Provider value={{ login, logout, user, errorLogin }}>
       {children}
     </AuthContext.Provider>
   );

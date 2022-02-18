@@ -23,7 +23,7 @@ const LoginSchema = Yup.object().shape({
 
 const Login = ({ navigation }: AuthNavigationProps<"Login">) => {
   const password = useRef<RNTextInput>(null);
-  const { login } = useContext(AuthContext);
+  const { login, errorLogin } = useContext(AuthContext);
 
   const footer = (
     <Footer
@@ -152,6 +152,11 @@ const Login = ({ navigation }: AuthNavigationProps<"Login">) => {
             </Text>
           </TouchableOpacity>
         </Box>
+        {errorLogin ? (
+          <Box alignItems="center">
+            <Text variant="error">{errorLogin}</Text>
+          </Box>
+        ) : null}
         <Box alignItems="center" marginTop="m">
           <Button
             variant="primary"

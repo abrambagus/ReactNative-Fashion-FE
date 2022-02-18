@@ -7,6 +7,7 @@ import SignUp from "./SignUp";
 import PasswordChanged from "./PasswordChanged";
 import ForgotPassword from "./ForgotPassword";
 import { AuthenticationRoutes } from "../components/Navigation";
+import SignUpSuccess from "./SignUpSuccess";
 export const assets = [...onBoaringAssets, ...WelcomeAssets];
 
 const AuthenticationStack = createStackNavigator<AuthenticationRoutes>();
@@ -25,6 +26,10 @@ export const AuthenticationNavigator = () => {
       <AuthenticationStack.Screen
         name="PasswordChanged"
         component={PasswordChanged}
+      />
+      <AuthenticationStack.Screen
+        name="SignUpSuccess"
+        component={SignUpSuccess}
       />
     </AuthenticationStack.Navigator>
   );
