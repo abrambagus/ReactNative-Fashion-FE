@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { ScrollView, StyleSheet } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import { Box, Header, useTheme, Text } from "../../components";
 import { HomeNavigationProps } from "../../components/Navigation";

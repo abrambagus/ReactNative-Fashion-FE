@@ -7,6 +7,7 @@ import {
 import Animated, {
   Extrapolate,
   interpolate,
+  runOnJS,
   useAnimatedGestureHandler,
   useAnimatedStyle,
   useDerivedValue,
@@ -46,21 +47,21 @@ const Card = ({ index, aIndex, step, onSwipe, source }: CardProps) => {
       translateX.value = translationX + ctx.x;
       translateY.value = translationY + ctx.y;
     },
-    // onEnd: ({ velocityX, velocityY }) => {
-    //   translateY.value = withSpring(0, {
-    //     velocity: velocityY,
-    //   });
-    //   const dest = snapPoint(translateX.value, velocityX, snapPoints);
-    //   translateX.value = withSpring(
-    //     dest,
-    //     {
-    //       overshootClamping: dest === 0 ? false : true,
-    //       restSpeedThreshold: dest === 0 ? 0.01 : 100,
-    //       restDisplacementThreshold: dest === 0 ? 0.01 : 100,
-    //     },
-    //     () => dest !== 0 && onSwipe()
-    //   );
-    // },
+    onEnd: ({ velocityX, velocityY }) => {
+      translateY.value = withSpring(0, {
+        velocity: velocityY,
+      });
+      const dest = snapPoint(translateX.value, velocityX, snapPoints);
+      translateX.value = withSpring(
+        dest,
+        {
+          overshootClamping: dest === 0 ? false : true,
+          restSpeedThreshold: dest === 0 ? 0.01 : 100,
+          restDisplacementThreshold: dest === 0 ? 0.01 : 100,
+        },
+        () => dest !== 0 && runOnJS(onSwipe)()
+      );
+    },
   });
 
   const cardStyle = useAnimatedStyle(() => {

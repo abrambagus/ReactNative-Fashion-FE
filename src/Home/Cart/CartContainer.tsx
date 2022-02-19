@@ -43,10 +43,10 @@ const CartContainer = ({ children, CheckoutComponent }: CartContainerProps) => {
         snapPoints[1]
       );
     },
-    // onEnd: ({ velocityY }) => {
-    //   const dest = snapPoint(translateY.value, velocityY, snapPoints);
-    //   translateY.value = withSpring(dest, { overshootClamping: true });
-    // },
+    onEnd: ({ velocityY }) => {
+      const dest = snapPoint(translateY.value, velocityY, snapPoints);
+      translateY.value = withSpring(dest, { overshootClamping: true });
+    },
   });
   const style = useAnimatedStyle(() => ({
     transform: [{ translateY: translateY.value }],

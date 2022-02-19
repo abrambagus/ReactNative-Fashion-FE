@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDerivedValue } from "react-native-reanimated";
+import { useTiming } from "react-native-redash";
 import { Box, Header } from "../../components";
 import { HomeNavigationProps } from "../../components/Navigation";
 import Background from "./Background";
@@ -29,9 +29,7 @@ const step = 1 / (cards.length - 1);
 
 const OutfitIdeas = ({ navigation }: HomeNavigationProps<"OutfitIdeas">) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const aIndex = useDerivedValue(() => {
-    return currentIndex;
-  });
+  const aIndex = useTiming(currentIndex);
 
   return (
     <Box flex={1} backgroundColor="background">

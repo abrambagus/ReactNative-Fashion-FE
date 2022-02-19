@@ -1,10 +1,11 @@
-import React, { ReactNode, useCallback } from "react";
+import React, { ReactNode } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import {
   PanGestureHandler,
   PanGestureHandlerGestureEvent,
 } from "react-native-gesture-handler";
 import Animated, {
+  runOnJS,
   useAnimatedGestureHandler,
   useAnimatedStyle,
   useSharedValue,
@@ -36,9 +37,6 @@ const SwipeableRow = ({
   const theme = useTheme();
   const translateX = useSharedValue(0);
   const height = useSharedValue(defaultHeight);
-  const deleteItem = useCallback(() => {
-    onDelete();
-  }, [onDelete]);
 
   const onGestureEvent = useAnimatedGestureHandler<
     PanGestureHandlerGestureEvent,
@@ -50,20 +48,22 @@ const SwipeableRow = ({
     onActive: ({ translationX }, ctx) => {
       translateX.value = ctx.x + translationX;
     },
-    // onEnd: ({ velocityX }) => {
-    //   const dest = snapPoint(translateX.value, velocityX, snapPoints);
-    //   translateX.value = withSpring(
-    //     dest,
-    //     {
-    //       overshootClamping: true,
-    //     },
-    //     () => {
-    //       if (dest === finalDestination) {
-    //         height.value = withTiming(0, { duration: 250 }, () => deleteItem());
-    //       }
-    //     }
-    //   );
-    // },
+    onEnd: ({ velocityX }) => {
+      const dest = snapPoint(translateX.value, velocityX, snapPoints);
+      translateX.value = withSpring(
+        dest,
+        {
+          overshootClamping: true,
+        },
+        () => {
+          if (dest === finalDestination) {
+            height.value = withTiming(0, { duration: 250 }, () => {
+              runOnJS(onDelete)();
+            });
+          }
+        }
+      );
+    },
   });
   const style = useAnimatedStyle(() => ({
     backgroundColor: theme.colors.background,
