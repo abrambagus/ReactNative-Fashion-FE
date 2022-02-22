@@ -39,6 +39,7 @@ const theme = createTheme({
     drawer2: palette.yellow,
     drawer3: palette.pink,
     drawer4: palette.violet,
+    drawer5: palette.lightBlue,
   },
   spacing: {
     s: 8,

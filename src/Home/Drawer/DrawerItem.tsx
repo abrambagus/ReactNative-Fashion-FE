@@ -42,7 +42,7 @@ const DrawerItem = ({ icon, label, color, ...props }: DrawerItemProps) => {
       }
       style={{ borderRadius: theme.borderRadii.m }}
     >
-      <Box flexDirection="row" alignItems="center" padding="m">
+      <Box flexDirection="row" alignItems="center" padding="s">
         <RoundedIcon
           name={icon}
           size={36}
