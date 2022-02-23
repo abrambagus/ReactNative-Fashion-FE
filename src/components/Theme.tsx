@@ -42,6 +42,7 @@ const theme = createTheme({
     drawer5: palette.lightBlue,
   },
   spacing: {
+    activityIndicatorMargin: -20,
     s: 8,
     m: 16,
     l: 24,
