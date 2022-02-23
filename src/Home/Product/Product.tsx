@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { ActivityIndicator, FlatList } from "react-native";
+import { ActivityIndicator, FlatList, TouchableOpacity } from "react-native";
 import { Box, Header, useTheme } from "../../components";
 import { HomeNavigationProps } from "../../components/Navigation";
 import { ProductContext } from "../../Services";
@@ -42,7 +42,13 @@ const Product = ({ navigation }: HomeNavigationProps<"Product">) => {
           renderItem={({ item }) => {
             return (
               <Box flex={1}>
-                <ProductCard product={item} />
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("ProductDetail", { product: item })
+                  }
+                >
+                  <ProductCard product={item} />
+                </TouchableOpacity>
               </Box>
             );
           }}

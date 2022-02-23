@@ -40,4 +40,5 @@ export type HomeRoutes = {
   EditProfile: undefined;
   Settings: undefined;
   Cart: undefined;
+  ProductDetail: { product: any };
 };
