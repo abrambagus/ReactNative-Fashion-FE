@@ -1,16 +1,23 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, TouchableOpacity } from "react-native";
-import { Box, Header, useTheme } from "../../components";
+import { Box, Header, useTheme, Text } from "../../components";
+import TextInput from "../../components/Form/TextInput";
 import { HomeNavigationProps } from "../../components/Navigation";
 import { ProductContext } from "../../Services";
 import ProductCard from "./ProductCard";
 
 const Product = ({ navigation }: HomeNavigationProps<"Product">) => {
-  const { products, getProduct, isLoadingProduct } = useContext(ProductContext);
+  const { products, getProduct, isLoadingProduct, searchProduct, searchError } =
+    useContext(ProductContext);
+  const [searchKeyword, setSearchKeyword] = useState("");
   const theme = useTheme();
   useEffect(() => {
     getProduct();
   }, []);
+
+  const onSearch = async (keyword: string) => {
+    await searchProduct(keyword);
+  };
 
   return (
     <Box flex={1} backgroundColor="background">
@@ -22,6 +29,21 @@ const Product = ({ navigation }: HomeNavigationProps<"Product">) => {
           onPress: () => navigation.navigate("Cart"),
         }}
       />
+
+      <Box paddingHorizontal="s" paddingTop="s">
+        <TextInput
+          icon="search"
+          placeholder="Search Producy by Name and Description"
+          autoCapitalize="none"
+          value={searchKeyword}
+          onSubmitEditing={() => {
+            onSearch(searchKeyword);
+          }}
+          onChangeText={(text) => {
+            setSearchKeyword(text);
+          }}
+        />
+      </Box>
 
       {isLoadingProduct ? (
         <Box
@@ -35,6 +57,10 @@ const Product = ({ navigation }: HomeNavigationProps<"Product">) => {
             animating={true}
             color={theme.colors.primary}
           />
+        </Box>
+      ) : searchError ? (
+        <Box position="absolute" top="50%" left="36%">
+          <Text variant="error">{searchError}</Text>
         </Box>
       ) : (
         <FlatList
