@@ -24,10 +24,10 @@ const AppStack = createStackNavigator<AppRoutes>();
 
 export default function App() {
   return (
-    <AuthContextProvider>
-      <ProductContextProvider>
-        <ThemeProvider>
-          <LoadAssets {...{ fonts, assets }}>
+    <ThemeProvider>
+      <LoadAssets {...{ fonts, assets }}>
+        <AuthContextProvider>
+          <ProductContextProvider>
             <SafeAreaProvider>
               <AppStack.Navigator screenOptions={{ headerShown: false }}>
                 <AppStack.Screen
@@ -37,9 +37,9 @@ export default function App() {
                 <AppStack.Screen name="Home" component={HomeNavigator} />
               </AppStack.Navigator>
             </SafeAreaProvider>
-          </LoadAssets>
-        </ThemeProvider>
-      </ProductContextProvider>
-    </AuthContextProvider>
+          </ProductContextProvider>
+        </AuthContextProvider>
+      </LoadAssets>
+    </ThemeProvider>
   );
 }

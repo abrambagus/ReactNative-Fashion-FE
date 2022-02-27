@@ -3,3 +3,4 @@ export {
   ProductContext,
   ProductContextProvider,
 } from "./Product/ProductContext";
+export { CartContext, CartContextProvider } from "./Cart/CartContext";

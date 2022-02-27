@@ -4,9 +4,10 @@ import { Box, Button, useTheme } from "../../components";
 interface CheckboxGroupProps {
   options: { value: string; label: string }[];
   radio?: boolean;
+  callback?: any;
 }
 
-const CheckboxGroup = ({ options, radio }: CheckboxGroupProps) => {
+const CheckboxGroup = ({ options, radio, callback }: CheckboxGroupProps) => {
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
   const theme = useTheme();
 
@@ -21,6 +22,7 @@ const CheckboxGroup = ({ options, radio }: CheckboxGroupProps) => {
             variant={isSelected ? "primary" : "default"}
             onPress={() => {
               if (radio) {
+                callback && callback(value);
                 setSelectedValues([value]);
               } else {
                 if (isSelected) {
