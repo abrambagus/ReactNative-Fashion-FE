@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { Dimensions, StyleSheet, View } from "react-native";
+import { Alert, Dimensions, StyleSheet, View } from "react-native";
 import {
   PanGestureHandler,
   PanGestureHandlerGestureEvent,
@@ -22,6 +22,8 @@ interface SwipeableRowProps {
   children: ReactNode;
   onDelete: () => void;
   height: number;
+  addQty: any;
+  substractQty: any;
 }
 
 const { width } = Dimensions.get("window");
@@ -33,6 +35,8 @@ const SwipeableRow = ({
   children,
   onDelete,
   height: defaultHeight,
+  addQty,
+  substractQty,
 }: SwipeableRowProps) => {
   const theme = useTheme();
   const translateX = useSharedValue(0);
@@ -105,20 +109,21 @@ const SwipeableRow = ({
         />
         <Box
           flex={1}
-          justifyContent="space-evenly"
+          justifyContent="center"
           width={editWidth}
           alignSelf="flex-end"
           alignItems="center"
         >
           <RoundedIconButton
-            onPress={() => alert("Plus")}
+            onPress={() => addQty()}
             name="plus"
             size={24}
             color="background"
             backgroundColor="primary"
           />
+          <Box margin="ss" />
           <RoundedIconButton
-            onPress={() => alert("Minus")}
+            onPress={() => substractQty()}
             name="minus"
             size={24}
             color="background"

@@ -43,6 +43,7 @@ const theme = createTheme({
   },
   spacing: {
     activityIndicatorMargin: -20,
+    ss: 4,
     s: 8,
     m: 16,
     l: 24,

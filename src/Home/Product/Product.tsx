@@ -12,7 +12,7 @@ const Product = ({ navigation }: HomeNavigationProps<"Product">) => {
   const [searchKeyword, setSearchKeyword] = useState("");
   const theme = useTheme();
   useEffect(() => {
-    getProduct();
+    (async () => await getProduct())();
   }, []);
 
   const onSearch = async (keyword: string) => {

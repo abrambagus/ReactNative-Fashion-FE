@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import { Box, Header, useTheme, Text } from "../../components";
@@ -7,15 +7,25 @@ import { aspectRatio } from "../../components/Theme";
 import CartContainer from "./CartContainer";
 import Item from "./Item";
 import Checkout from "./Checkout";
+import { CartContext } from "../../Services";
 
 const height = 100 * aspectRatio;
 const d = "M 0 0 A 50 50 0 0 0 50 50 H 325 A 50 50 0 0 1 375 100 V 0 Z";
 
-const defaultItems = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }];
+// const defaultItems = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }];
 
 const Cart = ({ navigation }: HomeNavigationProps<"Cart">) => {
   const theme = useTheme();
-  const [items, setItems] = useState(defaultItems);
+  // const [items, setItems] = useState(defaultItems);
+  const { getUserCart, deleteCartItem, cart } = useContext(CartContext);
+
+  const onDelete = (id: number) => {
+    deleteCartItem(id);
+  };
+
+  useEffect(() => {
+    (async () => await getUserCart())();
+  }, []);
 
   return (
     <CartContainer CheckoutComponent={Checkout}>
@@ -33,15 +43,14 @@ const Cart = ({ navigation }: HomeNavigationProps<"Cart">) => {
           contentContainerStyle={{ paddingVertical: 50 * aspectRatio }}
           showsVerticalScrollIndicator={false}
         >
-          {items.map((item, index) => (
-            <Item
-              key={item.id}
-              onDelete={() => {
-                items.splice(index, 1);
-                setItems(items.concat());
-              }}
-            />
-          ))}
+          {cart &&
+            cart.map((cartItem: any, index: any) => (
+              <Item
+                key={index}
+                cartItem={cartItem}
+                onDelete={() => onDelete(cartItem.id)}
+              />
+            ))}
         </ScrollView>
         <Box
           style={{
@@ -55,9 +64,11 @@ const Cart = ({ navigation }: HomeNavigationProps<"Cart">) => {
           <Svg style={StyleSheet.absoluteFill} viewBox="0 0 375 100">
             <Path d={d} fill={theme.colors.primary} />
           </Svg>
-          <Text variant="title2" color="background" textAlign="center">
-            3 Items Added
-          </Text>
+          {cart.length === 0 ? null : (
+            <Text variant="title2" textAlign="center" color="background">
+              {cart.length} Items Added
+            </Text>
+          )}
         </Box>
       </Box>
     </CartContainer>

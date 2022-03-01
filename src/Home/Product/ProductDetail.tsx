@@ -14,7 +14,7 @@ const ProductDetail = ({
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState("");
 
-  const { addToCart } = useContext(CartContext);
+  const { addProductToCart } = useContext(CartContext);
 
   const onChangesSize = (size: string) => {
     setSelectedSize(size);
@@ -46,7 +46,7 @@ const ProductDetail = ({
   };
 
   const onSubmitCart = async () => {
-    const postCart = await addToCart(postToCart);
+    const postCart = await addProductToCart(postToCart);
     if (postCart === "Success") {
       Alert.alert("Success", "Item added to cart");
     }
