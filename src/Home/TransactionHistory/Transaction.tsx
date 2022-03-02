@@ -1,10 +1,9 @@
 import React from "react";
-import { DataPoint } from "./Graph";
 import { Box, Text } from "../../components";
 import moment from "moment";
 
 interface TransactionProps {
-  transaction: DataPoint;
+  transaction: any;
 }
 
 const Transaction = ({ transaction }: TransactionProps) => {
@@ -18,16 +17,16 @@ const Transaction = ({ transaction }: TransactionProps) => {
       <Box>
         <Box flexDirection="row" alignItems="center" marginBottom="s">
           <Box
-            backgroundColor={transaction.color}
-            style={{ width: 10, height: 10, borderRadius: 5 }}
-            marginRight="s"
+          // backgroundColor={transaction.color}
+          // style={{ width: 10, height: 10, borderRadius: 5 }}
+          // marginRight="s"
           />
-          <Text variant="title3">{`#${transaction.id}`}</Text>
+          <Text variant="title3">{`# ${transaction.id}`}</Text>
         </Box>
         <Text color="info">
-          {`$${transaction.value} - ${moment(transaction.date).format(
-            "MMMM DD, YYYY"
-          )}`}
+          {`$${transaction.totalPrice} - ${moment(
+            transaction.currentDate
+          ).format("MMMM DD, YYYY")}`}
         </Text>
       </Box>
       <Box>

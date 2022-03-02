@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { createContext, ReactNode, useEffect, useState } from "react";
+import React, { createContext, ReactNode, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const BASE_URL = "http://192.168.18.8:8000/api";
@@ -12,12 +12,6 @@ interface CartContextProviderProps {
 
 export const CartContextProvider = ({ children }: CartContextProviderProps) => {
   const [cart, setCart] = useState([]);
-
-  useEffect(() => {
-    (async () => {
-      await getUserCart();
-    })();
-  }, []);
 
   const addProductToCart = async (data: any) => {
     const token = await AsyncStorage.getItem("token");
@@ -75,7 +69,6 @@ export const CartContextProvider = ({ children }: CartContextProviderProps) => {
   const editQuantity = async (body: any) => {
     const token = await AsyncStorage.getItem("token");
     const { idCart, quantity } = body;
-    console.log(quantity, idCart);
     if (token) {
       await axios
         .patch(

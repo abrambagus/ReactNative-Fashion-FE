@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import { ScrollView } from "react-native";
+import React, { useContext, useState } from "react";
+import { Alert, ScrollView } from "react-native";
 import { Button, Box, Text } from "../../components";
+import { CartContext, CheckoutContext } from "../../Services";
 import AddCard from "./AddCard";
 import Card, { CardModel, CardType } from "./Card";
 import { CARD_HEIGHT } from "./CardLayout";
@@ -34,7 +35,7 @@ const LineItem = ({ label, value }: LineItemProps) => {
       </Box>
       <Box>
         <Text color="primary" variant="title3">
-          ${value}
+          $ {value}
         </Text>
       </Box>
     </Box>
@@ -43,6 +44,51 @@ const LineItem = ({ label, value }: LineItemProps) => {
 
 const Checkout = ({ minHeight }: CheckoutProps) => {
   const [selectedCard, setSelectedCard] = useState(cards[0].id);
+  const { cart, getUserCart } = useContext(CartContext);
+  const { addTransaction } = useContext(CheckoutContext);
+
+  const getTotalItems = () => {
+    let totalItems = 0;
+    if (cart.length > 0) {
+      cart.forEach((item: any) => {
+        totalItems += item.quantity;
+      });
+      return totalItems;
+    } else {
+      return 0;
+    }
+  };
+
+  const getTotalCartValue = () => {
+    let totalCartValue = 0;
+    if (cart.length > 0) {
+      cart.forEach((item: any) => {
+        totalCartValue += item.price * item.quantity;
+      });
+      return totalCartValue;
+    } else {
+      return 0;
+    }
+  };
+
+  const deliveryFee = 10;
+  const totalOrder = () => {
+    if (cart.length > 0) {
+      return getTotalCartValue() + deliveryFee;
+    } else {
+      return 0;
+    }
+  };
+
+  const order = {
+    totalPrice: totalOrder(),
+  };
+
+  const onSubmit = async () => {
+    await addTransaction(order);
+    await getUserCart();
+    Alert.alert("Success", "Your order has been placed");
+  };
 
   return (
     <Box flex={1} backgroundColor="secondary" style={{ paddingTop: minHeight }}>
@@ -73,9 +119,12 @@ const Checkout = ({ minHeight }: CheckoutProps) => {
               <Text color="background">Change</Text>
             </Box>
           </Box>
-          <LineItem label="Total Items (6)" value={189.94} />
-          <LineItem label="Standard Delivery" value={12.0} />
-          <LineItem label="Total Payment" value={201.84} />
+          <LineItem
+            label={`Total Items (${getTotalItems()})`}
+            value={getTotalCartValue()}
+          />
+          <LineItem label="Standard Delivery" value={deliveryFee} />
+          <LineItem label="Total Payment" value={totalOrder()} />
         </Box>
         <Box
           paddingVertical="m"
@@ -84,9 +133,9 @@ const Checkout = ({ minHeight }: CheckoutProps) => {
           justifyContent="flex-end"
         >
           <Button
-            label="Swipe to Pay $201.84"
+            label={`Press To Pay $ ${totalOrder()}`}
             variant="primary"
-            onPress={() => true}
+            onPress={() => onSubmit()}
           />
         </Box>
       </Box>

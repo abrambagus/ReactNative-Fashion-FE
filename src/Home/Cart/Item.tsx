@@ -20,7 +20,6 @@ const Item = ({ onDelete, cartItem }: ItemProps) => {
       quantity: cartItem.quantity + 1,
     };
     editQuantity(body);
-    console.log("ssss");
   };
 
   const substractQty = () => {

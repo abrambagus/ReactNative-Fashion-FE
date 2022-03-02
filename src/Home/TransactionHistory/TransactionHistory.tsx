@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { ScrollView, StyleSheet, Dimensions } from "react-native";
 import { Box, Header, ScrollableContent, Text } from "../../components";
 import { HomeNavigationProps } from "../../components/Navigation";
 import Transaction from "./Transaction";
 import Graph, { DataPoint } from "./Graph";
 import { makeStyles, Theme } from "../../components/Theme";
+import { CheckoutContext } from "../../Services";
 const footerHeight = Dimensions.get("window").width / 3;
 const startDate = new Date("2019-09-01").getTime();
 const numberOfMonths = 6;
@@ -33,7 +34,26 @@ const data: DataPoint[] = [
 const TransactionHistory = ({
   navigation,
 }: HomeNavigationProps<"TransactionHistory">) => {
+  const { getTransaction, transaction } = useContext(CheckoutContext);
   const styles = useStyles();
+
+  useEffect(() => {
+    (async () => await getTransaction())();
+  }, []);
+
+  const getTotalSpent = () => {
+    let totalSpent = 0;
+    if (transaction.length > 0) {
+      transaction.forEach((item: any) => {
+        totalSpent += item.totalPrice;
+      });
+      return totalSpent;
+    } else {
+      return 0;
+    }
+  };
+
+  console.log(getTotalSpent());
 
   return (
     <ScrollableContent>
@@ -53,7 +73,7 @@ const TransactionHistory = ({
               <Text variant="header" color="secondary" opacity={0.3}>
                 TOTAL SPENT
               </Text>
-              <Text variant="title1">$619,19</Text>
+              <Text variant="title1">$ {getTotalSpent()}</Text>
             </Box>
             <Box backgroundColor="primaryLight" borderRadius="l" padding="s">
               <Text color="primary">All Time</Text>
@@ -68,9 +88,10 @@ const TransactionHistory = ({
             contentContainerStyle={styles.scrollView}
             showsVerticalScrollIndicator={false}
           >
-            {data.map((transaction) => (
-              <Transaction key={transaction.id} transaction={transaction} />
-            ))}
+            {transaction &&
+              transaction.map((transactionItem: any, index: any) => (
+                <Transaction key={index} transaction={transactionItem} />
+              ))}
           </ScrollView>
         </Box>
       </Box>

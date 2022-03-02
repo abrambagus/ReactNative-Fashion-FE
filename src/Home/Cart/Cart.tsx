@@ -34,7 +34,10 @@ const Cart = ({ navigation }: HomeNavigationProps<"Cart">) => {
           <Header
             dark
             title="Shopping Cart"
-            left={{ icon: "arrow-left", onPress: () => navigation.goBack() }}
+            left={{
+              icon: "arrow-left",
+              onPress: () => navigation.navigate("Product"),
+            }}
           />
         </Box>
       </Box>

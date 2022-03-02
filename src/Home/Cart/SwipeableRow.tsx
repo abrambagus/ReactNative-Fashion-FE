@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { Alert, Dimensions, StyleSheet, View } from "react-native";
+import { Dimensions, StyleSheet, View } from "react-native";
 import {
   PanGestureHandler,
   PanGestureHandlerGestureEvent,
