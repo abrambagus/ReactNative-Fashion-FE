@@ -13,7 +13,7 @@ interface CheckoutContextProviderProps {
 export const CheckoutContextProvider = ({
   children,
 }: CheckoutContextProviderProps) => {
-  const [transaction, setTransaction] = useState(null);
+  const [transaction, setTransaction] = useState([]);
 
   const addTransaction = async (data: any) => {
     const token = await AsyncStorage.getItem("token");

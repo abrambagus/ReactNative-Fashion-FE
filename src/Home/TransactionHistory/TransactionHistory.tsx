@@ -53,7 +53,7 @@ const TransactionHistory = ({
     }
   };
 
-  console.log(getTotalSpent());
+  console.log(transaction);
 
   return (
     <ScrollableContent>

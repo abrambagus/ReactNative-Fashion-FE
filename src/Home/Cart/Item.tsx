@@ -16,7 +16,7 @@ const Item = ({ onDelete, cartItem }: ItemProps) => {
 
   const addQty = () => {
     const body = {
-      idCart: cartItem.id,
+      cartId: cartItem.id,
       quantity: cartItem.quantity + 1,
     };
     editQuantity(body);
@@ -25,7 +25,7 @@ const Item = ({ onDelete, cartItem }: ItemProps) => {
   const substractQty = () => {
     if (cartItem.quantity > 1) {
       const body = {
-        idCart: cartItem.id,
+        cartId: cartItem.id,
         quantity: cartItem.quantity - 1,
       };
       editQuantity(body);

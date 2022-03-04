@@ -6,7 +6,7 @@ const ProductCard = ({ product }: any) => {
   const theme = useTheme();
 
   return (
-    <Box flex={1} padding="m">
+    <Box flex={1} padding="s">
       <Card
         style={{ backgroundColor: theme.colors.background2, borderRadius: 5 }}
       >

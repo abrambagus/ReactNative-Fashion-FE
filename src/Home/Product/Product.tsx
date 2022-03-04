@@ -67,7 +67,7 @@ const Product = ({ navigation }: HomeNavigationProps<"Product">) => {
           data={products}
           renderItem={({ item }) => {
             return (
-              <Box flex={1}>
+              <Box flex={1 / 2}>
                 <TouchableOpacity
                   onPress={() =>
                     navigation.navigate("ProductDetail", { product: item })
@@ -78,7 +78,7 @@ const Product = ({ navigation }: HomeNavigationProps<"Product">) => {
               </Box>
             );
           }}
-          numColumns={1}
+          numColumns={2}
           keyExtractor={(item) => item.id.toString()}
         />
       )}

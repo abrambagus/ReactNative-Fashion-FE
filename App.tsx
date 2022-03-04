@@ -14,6 +14,7 @@ import {
   CartContextProvider,
   ProductContextProvider,
   CheckoutContextProvider,
+  FavouriteContextProvider,
 } from "./src/Services";
 
 const assets = [...authenticationAssets, ...homeAssets];
@@ -32,21 +33,23 @@ export default function App() {
     <ThemeProvider>
       <LoadAssets {...{ fonts, assets }}>
         <AuthContextProvider>
-          <CartContextProvider>
-            <CheckoutContextProvider>
-              <ProductContextProvider>
-                <SafeAreaProvider>
-                  <AppStack.Navigator screenOptions={{ headerShown: false }}>
-                    <AppStack.Screen
-                      name="Authentication"
-                      component={AuthenticationNavigator}
-                    />
-                    <AppStack.Screen name="Home" component={HomeNavigator} />
-                  </AppStack.Navigator>
-                </SafeAreaProvider>
-              </ProductContextProvider>
-            </CheckoutContextProvider>
-          </CartContextProvider>
+          <ProductContextProvider>
+            <FavouriteContextProvider>
+              <CartContextProvider>
+                <CheckoutContextProvider>
+                  <SafeAreaProvider>
+                    <AppStack.Navigator screenOptions={{ headerShown: false }}>
+                      <AppStack.Screen
+                        name="Authentication"
+                        component={AuthenticationNavigator}
+                      />
+                      <AppStack.Screen name="Home" component={HomeNavigator} />
+                    </AppStack.Navigator>
+                  </SafeAreaProvider>
+                </CheckoutContextProvider>
+              </CartContextProvider>
+            </FavouriteContextProvider>
+          </ProductContextProvider>
         </AuthContextProvider>
       </LoadAssets>
     </ThemeProvider>

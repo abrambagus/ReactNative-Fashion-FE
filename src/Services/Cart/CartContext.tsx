@@ -48,12 +48,12 @@ export const CartContextProvider = ({ children }: CartContextProviderProps) => {
     }
   };
 
-  const deleteCartItem = async (idCart: number) => {
+  const deleteCartItem = async (cartId: number) => {
     const token = await AsyncStorage.getItem("token");
 
     if (token) {
       await axios
-        .delete(`${BASE_URL}/cart/${idCart}`, {
+        .delete(`${BASE_URL}/cart/${cartId}`, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then(async (res) => {
@@ -68,11 +68,11 @@ export const CartContextProvider = ({ children }: CartContextProviderProps) => {
 
   const editQuantity = async (body: any) => {
     const token = await AsyncStorage.getItem("token");
-    const { idCart, quantity } = body;
+    const { cartId, quantity } = body;
     if (token) {
       await axios
         .patch(
-          `${BASE_URL}/cart/${idCart}`,
+          `${BASE_URL}/cart/${cartId}`,
           { quantity },
           {
             headers: { Authorization: `Bearer ${token}` },

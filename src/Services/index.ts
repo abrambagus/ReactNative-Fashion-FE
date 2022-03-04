@@ -8,3 +8,7 @@ export {
   CheckoutContext,
   CheckoutContextProvider,
 } from "./Checkout/CheckoutContext";
+export {
+  FavouriteContext,
+  FavouriteContextProvider,
+} from "./Favourite/FavouriteContext";
