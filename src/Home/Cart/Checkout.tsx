@@ -1,7 +1,9 @@
+import { useNavigation } from "@react-navigation/native";
 import React, { useContext, useState } from "react";
 import { Alert, ScrollView } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import { Button, Box, Text } from "../../components";
-import { CartContext, CheckoutContext } from "../../Services";
+import { AuthContext, CartContext, CheckoutContext } from "../../Services";
 import AddCard from "./AddCard";
 import Card, { CardModel, CardType } from "./Card";
 import { CARD_HEIGHT } from "./CardLayout";
@@ -45,7 +47,9 @@ const LineItem = ({ label, value }: LineItemProps) => {
 const Checkout = ({ minHeight }: CheckoutProps) => {
   const [selectedCard, setSelectedCard] = useState(cards[0].id);
   const { cart, getUserCart } = useContext(CartContext);
+  const { user } = useContext(AuthContext);
   const { addTransaction } = useContext(CheckoutContext);
+  const navigation = useNavigation();
 
   const getTotalItems = () => {
     let totalItems = 0;
@@ -112,11 +116,14 @@ const Checkout = ({ minHeight }: CheckoutProps) => {
           </Text>
           <Box flexDirection="row" opacity={0.5} paddingVertical="m">
             <Box flex={1}>
-              <Text color="background">1545 Blvd. Cote-Vertu Ouest</Text>
-              <Text color="background">Montreal, Quebec</Text>
+              <Text color="background">{user?.address}</Text>
             </Box>
             <Box justifyContent="center" alignItems="center">
-              <Text color="background">Change</Text>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("EditProfile" as never)}
+              >
+                <Text color="background">Change</Text>
+              </TouchableOpacity>
             </Box>
           </Box>
           <LineItem

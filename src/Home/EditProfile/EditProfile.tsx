@@ -1,20 +1,22 @@
 import { DrawerActions } from "@react-navigation/native";
-import React from "react";
+import React, { useContext } from "react";
 import { Dimensions } from "react-native";
 import { Box, Header, Text, useTheme } from "../../components";
 import { HomeNavigationProps } from "../../components/Navigation";
 import Tabs from "./Tabs";
 import Configuration from "./Configuration";
 import PersonalInfo from "./PersonalInfo";
+import { AuthContext } from "../../Services";
 
 const { width } = Dimensions.get("window");
 const tabs = [
-  { id: "config", title: "Configuration" },
   { id: "info", title: "Personal Info" },
+  { id: "config", title: "Configuration" },
 ];
 
 const EditProfile = ({ navigation }: HomeNavigationProps<"EditProfile">) => {
   const theme = useTheme();
+  const { user } = useContext(AuthContext);
 
   return (
     <Box flex={1} backgroundColor="background">
@@ -50,16 +52,16 @@ const EditProfile = ({ navigation }: HomeNavigationProps<"EditProfile">) => {
         />
         <Box marginVertical="m" style={{ marginTop: 50 + theme.spacing.m }}>
           <Text variant="title1" textAlign="center">
-            Abram Bagus
+            {user?.name}
           </Text>
           <Text variant="body" textAlign="center">
-            abrambagus@gmail.com
+            {user?.email}
           </Text>
         </Box>
       </Box>
       <Tabs tabs={tabs}>
-        <Configuration />
         <PersonalInfo />
+        <Configuration />
       </Tabs>
     </Box>
   );

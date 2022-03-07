@@ -3,10 +3,11 @@ import {
   DrawerActions,
   useNavigation,
 } from "@react-navigation/native";
-import React from "react";
+import React, { useContext } from "react";
 import { Dimensions, Image } from "react-native";
 import { Box, Text, Header } from "../../components";
 import { useTheme } from "../../components/Theme";
+import { AuthContext } from "../../Services";
 import DrawerItem, { DrawerItemProps } from "./DrawerItem";
 
 const { width } = Dimensions.get("window");
@@ -70,9 +71,8 @@ const items: DrawerItemProps[] = [
 const Drawer = () => {
   const theme = useTheme();
   const navigation = useNavigation();
-  // const { user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
-  // console.log(user);
   return (
     <Box flex={1}>
       <Box flex={0.2} backgroundColor="background">
@@ -124,10 +124,10 @@ const Drawer = () => {
           />
           <Box marginVertical="m">
             <Text variant="title1" textAlign="center">
-              Abram Bagus
+              {user?.name}
             </Text>
             <Text variant="body" textAlign="center">
-              abrambagus@gmail.com
+              {user?.email}
             </Text>
           </Box>
           {items.map((item) => (
