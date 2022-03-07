@@ -92,7 +92,7 @@ const Drawer = () => {
               onPress: () => navigation.dispatch(DrawerActions.closeDrawer()),
             }}
             right={{
-              icon: "shopping-bag",
+              icon: "shopping-cart",
               onPress: () => navigation.navigate("Cart" as never),
             }}
             dark

@@ -11,6 +11,7 @@ const Product = ({ navigation }: HomeNavigationProps<"Product">) => {
     useContext(ProductContext);
   const [searchKeyword, setSearchKeyword] = useState("");
   const theme = useTheme();
+
   useEffect(() => {
     (async () => await getProduct())();
   }, []);

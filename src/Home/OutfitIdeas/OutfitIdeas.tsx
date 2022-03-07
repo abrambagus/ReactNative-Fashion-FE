@@ -36,7 +36,7 @@ const OutfitIdeas = ({ navigation }: HomeNavigationProps<"OutfitIdeas">) => {
       <Header
         title="Outfit Ideas"
         left={{ icon: "menu", onPress: () => navigation.openDrawer() }}
-        right={{ icon: "shopping-bag", onPress: () => true }}
+        right={{ icon: "shopping-cart", onPress: () => true }}
         dark={false}
       />
       <Categories />

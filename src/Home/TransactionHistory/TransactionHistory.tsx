@@ -53,8 +53,6 @@ const TransactionHistory = ({
     }
   };
 
-  console.log(transaction);
-
   return (
     <ScrollableContent>
       <Box flex={1} backgroundColor="background">

@@ -1,10 +1,11 @@
-import { Alert, Image, ScrollView } from "react-native";
-import React, { useContext, useState } from "react";
+import { Alert, Image, ScrollView, TouchableOpacity } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
 import { Box, Button, Header, RoundedIcon, Text } from "../../components";
 import { HomeNavigationProps } from "../../components/Navigation";
 import CheckboxGroup from "../EditProfile/CheckboxGroup";
 import { RectButton } from "react-native-gesture-handler";
-import { CartContext } from "../../Services";
+import { CartContext, FavouriteContext } from "../../Services";
+import { AntDesign } from "@expo/vector-icons";
 
 const ProductDetail = ({
   navigation,
@@ -13,7 +14,8 @@ const ProductDetail = ({
   const { product } = route.params;
   const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState("");
-
+  const { favourites, deleteFavourite, addToFavourite, getFavourites } =
+    useContext(FavouriteContext);
   const { addProductToCart } = useContext(CartContext);
 
   const onChangesSize = (size: string) => {
@@ -45,6 +47,20 @@ const ProductDetail = ({
     price: product.price,
   };
 
+  const isFavourite = favourites.find((f: any) => f.product.id === product.id);
+
+  const addFav = async () => {
+    await addToFavourite(product.id);
+  };
+
+  const removeFav = async () => {
+    await deleteFavourite(isFavourite.id);
+  };
+
+  useEffect(() => {
+    (async () => await getFavourites())();
+  }, []);
+
   const onSubmitCart = async () => {
     const postCart = await addProductToCart(postToCart);
     if (postCart === "Success") {
@@ -71,6 +87,17 @@ const ProductDetail = ({
           uri: `http://192.168.18.8:8000/api/product-image/${product.image}`,
         }}
       />
+      <Box position="absolute" top={90} right={20} zIndex={9}>
+        <TouchableOpacity
+          onPress={() => (isFavourite ? removeFav() : addFav())}
+        >
+          <AntDesign
+            name={isFavourite ? "heart" : "hearto"}
+            size={30}
+            color={isFavourite ? "red" : "black"}
+          />
+        </TouchableOpacity>
+      </Box>
       <Box padding="m" flex={1}>
         <Box flexDirection="row" marginBottom="m">
           <Box flex={1}>

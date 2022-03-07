@@ -21,7 +21,7 @@ export const FavouriteContextProvider = ({
     if (token) {
       await axios
         .post(
-          `${BASE_URL}/transaction`,
+          `${BASE_URL}/favourite`,
           { productId },
           {
             headers: { Authorization: `Bearer ${token}` },
@@ -32,7 +32,7 @@ export const FavouriteContextProvider = ({
           console.log(res.data);
         })
         .catch((err) => {
-          console.log(err.message);
+          console.log(err);
         });
     }
   };

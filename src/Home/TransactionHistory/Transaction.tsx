@@ -24,7 +24,7 @@ const Transaction = ({ transaction }: TransactionProps) => {
           <Text variant="title3">{`# ${transaction.id}`}</Text>
         </Box>
         <Text color="info">
-          {`$${transaction.totalPrice} - ${moment(
+          {`$ ${transaction.totalPrice} - ${moment(
             transaction.currentDate
           ).format("MMMM DD, YYYY")}`}
         </Text>
