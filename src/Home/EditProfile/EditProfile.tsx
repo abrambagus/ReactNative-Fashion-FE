@@ -7,6 +7,7 @@ import Tabs from "./Tabs";
 import Configuration from "./Configuration";
 import PersonalInfo from "./PersonalInfo";
 import { AuthContext } from "../../Services";
+import { Avatar } from "react-native-paper";
 
 const { width } = Dimensions.get("window");
 const tabs = [
@@ -41,15 +42,25 @@ const EditProfile = ({ navigation }: HomeNavigationProps<"EditProfile">) => {
         </Box>
       </Box>
       <Box>
-        <Box
-          position="absolute"
-          left={width / 2 - 50}
-          top={-50}
-          backgroundColor="primary"
-          width={100}
-          height={100}
-          style={{ borderRadius: 50 }}
-        />
+        <Box position="absolute" left={width / 2 - 50} top={-50}>
+          {user?.profilePicture ? (
+            <Avatar.Image
+              size={100}
+              source={{
+                uri: `http://192.168.18.8:8000/api/profile-picture/${user.profilePicture}`,
+              }}
+            />
+          ) : (
+            <Avatar.Icon
+              size={100}
+              icon="human"
+              color="white"
+              style={{
+                backgroundColor: theme.colors.primary,
+              }}
+            />
+          )}
+        </Box>
         <Box marginVertical="m" style={{ marginTop: 50 + theme.spacing.m }}>
           <Text variant="title1" textAlign="center">
             {user?.name}

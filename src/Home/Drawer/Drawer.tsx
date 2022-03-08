@@ -4,8 +4,9 @@ import {
   useNavigation,
 } from "@react-navigation/native";
 import React, { useContext } from "react";
-import { Dimensions, Image } from "react-native";
+import { Alert, Dimensions, Image, TouchableOpacity } from "react-native";
 import { Avatar } from "react-native-paper";
+import * as ImagePicker from "expo-image-picker";
 import { Box, Text, Header } from "../../components";
 import { useTheme } from "../../components/Theme";
 import { AuthContext } from "../../Services";
@@ -72,7 +73,39 @@ const items: DrawerItemProps[] = [
 const Drawer = () => {
   const theme = useTheme();
   const navigation = useNavigation();
-  const { user } = useContext(AuthContext);
+  const { user, uploadUserProfilePicture } = useContext(AuthContext);
+
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (result.cancelled) {
+      return;
+    }
+
+    if (!result.cancelled) {
+      let image = result.uri;
+      const ext = image.substring(image.lastIndexOf(".") + 1);
+      const fileName = image.replace(/^.*[\\\/]/, "");
+      const type = `image/${ext}`;
+
+      let formData: any = new FormData();
+      formData.append("image", {
+        name: fileName,
+        uri: image,
+        type,
+      });
+      const uploadProfilePicture = await uploadUserProfilePicture(formData);
+      if (uploadProfilePicture === "Success") {
+        Alert.alert("Success", "Your profile Picture has been updated");
+      }
+    }
+  };
 
   return (
     <Box flex={1}>
@@ -114,17 +147,28 @@ const Drawer = () => {
           justifyContent="center"
           padding="xl"
         >
-          <Box position="absolute" left={DRAWER_WIDTH / 2 - 50} top={-50}>
-            <Avatar.Icon
-              size={100}
-              icon="human"
-              color="white"
-              style={{
-                backgroundColor: theme.colors.primary,
-              }}
-            />
-          </Box>
-          <Box marginVertical="m">
+          <TouchableOpacity onPress={() => pickImage()}>
+            <Box top={-50} alignSelf="center" overflow="hidden">
+              {user?.profilePicture ? (
+                <Avatar.Image
+                  size={100}
+                  source={{
+                    uri: `http://192.168.18.8:8000/api/profile-picture/${user.profilePicture}`,
+                  }}
+                />
+              ) : (
+                <Avatar.Icon
+                  size={100}
+                  icon="human"
+                  color="white"
+                  style={{
+                    backgroundColor: theme.colors.primary,
+                  }}
+                />
+              )}
+            </Box>
+          </TouchableOpacity>
+          <Box top={-40}>
             <Text variant="title1" textAlign="center">
               {user?.name}
             </Text>
@@ -132,9 +176,11 @@ const Drawer = () => {
               {user?.email}
             </Text>
           </Box>
-          {items.map((item) => (
-            <DrawerItem key={item.icon} {...item} />
-          ))}
+          <Box top={-20}>
+            {items.map((item) => (
+              <DrawerItem key={item.icon} {...item} />
+            ))}
+          </Box>
         </Box>
       </Box>
       <Box

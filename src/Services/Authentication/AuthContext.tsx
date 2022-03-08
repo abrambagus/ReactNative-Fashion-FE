@@ -119,6 +119,28 @@ export const AuthContextProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
+  const uploadUserProfilePicture = async (body: any) => {
+    const token = await AsyncStorage.getItem("token");
+
+    if (token) {
+      return await axios
+        .post(`${BASE_URL}/profile-picture`, body, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then(async (res) => {
+          await getUserWithToken();
+          console.log(res.data.message);
+          return "Success";
+        })
+        .catch((err) => {
+          console.log(err.response.data.message);
+        });
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -126,6 +148,7 @@ export const AuthContextProvider = ({ children }: AuthProviderProps) => {
         signUp,
         logout,
         updateUser,
+        uploadUserProfilePicture,
         user,
         errorLogin,
         errorSignUp,

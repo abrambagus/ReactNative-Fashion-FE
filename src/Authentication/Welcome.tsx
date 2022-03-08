@@ -1,9 +1,8 @@
 import React from "react";
-import { Image, Dimensions } from "react-native";
+import { Image, Dimensions, TouchableOpacity } from "react-native";
 import { Button } from "../components";
 import { AuthNavigationProps } from "../components/Navigation";
 import { Box, Text, useTheme } from "../components";
-import { TouchableOpacity } from "react-native-gesture-handler";
 
 const picture = {
   src: require("../../assets/images/5.png"),

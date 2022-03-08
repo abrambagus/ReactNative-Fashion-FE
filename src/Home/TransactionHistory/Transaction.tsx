@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Text } from "../../components";
 import moment from "moment";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableOpacity } from "react-native";
 
 interface TransactionProps {
   transaction: any;

@@ -2,7 +2,7 @@ import React, { ReactNode } from "react";
 import { BoxProps } from "@shopify/restyle";
 import { Box } from "../../components";
 import { Theme } from "../../components/Theme";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableOpacity } from "react-native";
 
 export const CARD_HEIGHT = 160;
 

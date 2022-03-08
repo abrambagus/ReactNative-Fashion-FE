@@ -1,7 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useContext, useState } from "react";
-import { Alert, ScrollView } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { Alert, ScrollView, TouchableOpacity } from "react-native";
 import { Button, Box, Text } from "../../components";
 import { AuthContext, CartContext, CheckoutContext } from "../../Services";
 import AddCard from "./AddCard";

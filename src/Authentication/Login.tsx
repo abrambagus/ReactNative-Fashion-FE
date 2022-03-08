@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef } from "react";
-import { TextInput as RNTextInput } from "react-native";
+import { TextInput as RNTextInput, TouchableOpacity } from "react-native";
 import * as Yup from "yup";
 import { Button, Box, Container, Text } from "../components";
 import TextInput from "../components/Form/TextInput";
@@ -10,7 +10,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Footer from "./components/Footer";
 import { AuthNavigationProps } from "../components/Navigation";
 import { CommonActions } from "@react-navigation/native";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import { AuthContext } from "../Services";
 
 const LoginSchema = Yup.object().shape({

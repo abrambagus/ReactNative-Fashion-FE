@@ -1,7 +1,7 @@
 import React from "react";
 import { Feather as Icon } from "@expo/vector-icons";
 import { Box, Text } from "../Theme";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableOpacity } from "react-native";
 
 interface CheckboxProps {
   label: string;
