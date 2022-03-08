@@ -1,8 +1,7 @@
 import axios from "axios";
 import React, { createContext, ReactNode, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
-const BASE_URL = "http://192.168.18.8:8000/api";
+import { BASE_URL } from "../Authentication/AuthContext";
 
 export const FavouriteContext = createContext<any>({});
 

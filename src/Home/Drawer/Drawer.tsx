@@ -152,6 +152,9 @@ const Drawer = () => {
               {user?.profilePicture ? (
                 <Avatar.Image
                   size={100}
+                  style={{
+                    backgroundColor: theme.colors.primary,
+                  }}
                   source={{
                     uri: `http://192.168.18.8:8000/api/profile-picture/${user.profilePicture}`,
                   }}
