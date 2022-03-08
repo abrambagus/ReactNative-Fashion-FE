@@ -76,10 +76,10 @@ export const AuthContextProvider = ({ children }: AuthProviderProps) => {
   };
 
   const logout = async () => {
+    setUser(null);
     await AsyncStorage.removeItem("token").catch(() =>
       console.log("logout fail")
     );
-    setUser(null);
     console.log("logout success");
   };
 
