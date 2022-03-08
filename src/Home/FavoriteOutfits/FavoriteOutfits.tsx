@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { FlatList, TouchableOpacity } from "react-native";
 import { Box, Header, Text } from "../../components";
 import { HomeNavigationProps } from "../../components/Navigation";
@@ -19,15 +19,12 @@ import ProductCard from "../Product/ProductCard";
 const FavoriteOutfits = ({
   navigation,
 }: HomeNavigationProps<"FavoriteOutfits">) => {
-  const { favourites, getFavourites } = useContext(FavouriteContext);
-  useEffect(() => {
-    (async () => await getFavourites())();
-  }, []);
+  const { favourites } = useContext(FavouriteContext);
 
   return (
     <Box flex={1} backgroundColor="background">
       <Header
-        title="Favorite Outfits"
+        title="Favourite Outfits"
         left={{ icon: "menu", onPress: () => navigation.openDrawer() }}
         right={{
           icon: "shopping-cart",
@@ -57,7 +54,7 @@ const FavoriteOutfits = ({
         />
       ) : (
         <Box position="absolute" top="50%" left="30%">
-          <Text variant="error">Favorite Outfits is Empty</Text>
+          <Text variant="error">Favourite Outfits is Empty</Text>
         </Box>
       )}
     </Box>

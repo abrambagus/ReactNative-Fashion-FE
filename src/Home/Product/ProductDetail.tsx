@@ -1,5 +1,5 @@
 import { Alert, Image, ScrollView, TouchableOpacity } from "react-native";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Box, Button, Header, RoundedIcon, Text } from "../../components";
 import { HomeNavigationProps } from "../../components/Navigation";
 import CheckboxGroup from "../EditProfile/CheckboxGroup";
@@ -13,13 +13,17 @@ const ProductDetail = ({
 }: HomeNavigationProps<"ProductDetail">) => {
   const { product } = route.params;
   const [quantity, setQuantity] = useState(1);
-  const [selectedSize, setSelectedSize] = useState("");
-  const { favourites, deleteFavourite, addToFavourite, getFavourites } =
+  const { favourites, deleteFavourite, addToFavourite } =
     useContext(FavouriteContext);
   const { addProductToCart } = useContext(CartContext);
 
-  const onChangesSize = (size: string) => {
-    setSelectedSize(size);
+  let postToCart = {
+    productId: product.id,
+    quantity: quantity,
+    size: product.sizes[0].name,
+    image: product.image,
+    name: product.name,
+    price: product.price,
   };
 
   const addQty = () => {
@@ -38,13 +42,8 @@ const ProductDetail = ({
     return { value: name, label: name };
   });
 
-  let postToCart = {
-    productId: product.id,
-    quantity: quantity,
-    size: selectedSize,
-    image: product.image,
-    name: product.name,
-    price: product.price,
+  const onChangesSize = (size: string) => {
+    postToCart.size = size;
   };
 
   const isFavourite = favourites.find((f: any) => f.product.id === product.id);
@@ -56,10 +55,6 @@ const ProductDetail = ({
   const removeFav = async () => {
     await deleteFavourite(isFavourite.id);
   };
-
-  useEffect(() => {
-    (async () => await getFavourites())();
-  }, []);
 
   const onSubmitCart = async () => {
     const postCart = await addProductToCart(postToCart);
@@ -121,6 +116,7 @@ const ProductDetail = ({
         <CheckboxGroup
           options={formattedSizes}
           radio
+          defaultSelected={product.sizes[0].name}
           callback={onChangesSize}
         />
 

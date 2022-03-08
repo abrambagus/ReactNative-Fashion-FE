@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { Box, Text, useTheme } from "../../components/Theme";
 import { Card } from "react-native-paper";
 import { TouchableOpacity } from "react-native";
@@ -7,7 +7,7 @@ import { FavouriteContext } from "../../Services";
 
 const ProductCard = ({ product }: any) => {
   const theme = useTheme();
-  const { favourites, deleteFavourite, addToFavourite, getFavourites } =
+  const { favourites, deleteFavourite, addToFavourite } =
     useContext(FavouriteContext);
   const isFavourite = favourites.find((f: any) => f.product.id === product.id);
 
@@ -18,10 +18,6 @@ const ProductCard = ({ product }: any) => {
   const removeFav = async () => {
     await deleteFavourite(isFavourite.id);
   };
-
-  useEffect(() => {
-    (async () => await getFavourites())();
-  }, []);
 
   return (
     <Box flex={1} padding="s">

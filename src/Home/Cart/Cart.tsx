@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import { Box, Header, useTheme, Text } from "../../components";
@@ -17,15 +17,11 @@ const d = "M 0 0 A 50 50 0 0 0 50 50 H 325 A 50 50 0 0 1 375 100 V 0 Z";
 const Cart = ({ navigation }: HomeNavigationProps<"Cart">) => {
   const theme = useTheme();
   // const [items, setItems] = useState(defaultItems);
-  const { getUserCart, deleteCartItem, cart } = useContext(CartContext);
+  const { deleteCartItem, cart } = useContext(CartContext);
 
-  const onDelete = (id: number) => {
+  const onDeleteCart = (id: number) => {
     deleteCartItem(id);
   };
-
-  useEffect(() => {
-    (async () => await getUserCart())();
-  }, []);
 
   return (
     <CartContainer CheckoutComponent={Checkout}>
@@ -51,7 +47,7 @@ const Cart = ({ navigation }: HomeNavigationProps<"Cart">) => {
               <Item
                 key={index}
                 cartItem={cartItem}
-                onDelete={() => onDelete(cartItem.id)}
+                onDelete={() => onDeleteCart(cartItem.id)}
               />
             ))}
         </ScrollView>

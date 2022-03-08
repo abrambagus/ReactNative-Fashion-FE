@@ -9,9 +9,19 @@ interface ButtonProps {
   onPress: () => void;
   style?: RectButtonProperties["style"];
   children?: ReactNode;
+  enabled?: any;
+  opacity?: number;
 }
 
-const Button = ({ variant, label, onPress, style, children }: ButtonProps) => {
+const Button = ({
+  variant,
+  label,
+  onPress,
+  style,
+  children,
+  enabled,
+  opacity,
+}: ButtonProps) => {
   const theme = useTheme();
   const backgroundColor =
     variant === "primary" ? theme.colors.primary : theme.colors.background2;
@@ -20,8 +30,8 @@ const Button = ({ variant, label, onPress, style, children }: ButtonProps) => {
 
   return (
     <RectButton
-      style={[styles.container, style, { backgroundColor }]}
-      {...{ onPress }}
+      style={[styles.container, style, { backgroundColor, opacity }]}
+      {...{ onPress, enabled }}
     >
       {children ? (
         children

@@ -5,6 +5,7 @@ import {
 } from "@react-navigation/native";
 import React, { useContext } from "react";
 import { Dimensions, Image } from "react-native";
+import { Avatar } from "react-native-paper";
 import { Box, Text, Header } from "../../components";
 import { useTheme } from "../../components/Theme";
 import { AuthContext } from "../../Services";
@@ -113,15 +114,16 @@ const Drawer = () => {
           justifyContent="center"
           padding="xl"
         >
-          <Box
-            position="absolute"
-            left={DRAWER_WIDTH / 2 - 50}
-            top={-50}
-            backgroundColor="primary"
-            width={100}
-            height={100}
-            style={{ borderRadius: 50 }}
-          />
+          <Box position="absolute" left={DRAWER_WIDTH / 2 - 50} top={-50}>
+            <Avatar.Icon
+              size={100}
+              icon="human"
+              color="white"
+              style={{
+                backgroundColor: theme.colors.primary,
+              }}
+            />
+          </Box>
           <Box marginVertical="m">
             <Text variant="title1" textAlign="center">
               {user?.name}

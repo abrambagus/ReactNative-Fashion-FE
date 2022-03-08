@@ -28,9 +28,7 @@ export const AuthContextProvider = ({ children }: AuthProviderProps) => {
   const [errorSignUp, setErrorSignUp] = useState("");
 
   useEffect(() => {
-    (async () => {
-      await getUserWithToken();
-    })();
+    (async () => await getUserWithToken())();
   }, []);
 
   const rememberMeEmail = async (remember: boolean, email?: string) => {

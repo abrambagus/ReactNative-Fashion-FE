@@ -89,9 +89,11 @@ const Checkout = ({ minHeight }: CheckoutProps) => {
   };
 
   const onSubmit = async () => {
-    await addTransaction(order);
+    const checkoutResult = await addTransaction(order);
+    if (checkoutResult === "Success") {
+      Alert.alert("Success", "Your order has been placed");
+    }
     await getUserCart();
-    Alert.alert("Success", "Your order has been placed");
   };
 
   return (
@@ -142,6 +144,8 @@ const Checkout = ({ minHeight }: CheckoutProps) => {
           <Button
             label={`Press To Pay $ ${totalOrder()}`}
             variant="primary"
+            enabled={cart.length > 0 && user.address ? true : false}
+            opacity={cart.length > 0 && user.address ? 1 : 0.5}
             onPress={() => onSubmit()}
           />
         </Box>

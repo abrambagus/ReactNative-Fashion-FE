@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { createContext, ReactNode, useState } from "react";
+import React, { createContext, ReactNode, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const BASE_URL = "http://192.168.18.8:8000/api";
@@ -15,17 +15,22 @@ export const CheckoutContextProvider = ({
 }: CheckoutContextProviderProps) => {
   const [transaction, setTransaction] = useState([]);
 
+  useEffect(() => {
+    (async () => await getTransaction())();
+  }, []);
+
   const addTransaction = async (data: any) => {
     const token = await AsyncStorage.getItem("token");
 
     if (token) {
-      await axios
+      return await axios
         .post(`${BASE_URL}/transaction`, data, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then(async (res) => {
           await getTransaction();
           console.log(res.data);
+          return "Success";
         })
         .catch((err) => {
           console.log(err.message);
@@ -49,11 +54,29 @@ export const CheckoutContextProvider = ({
     }
   };
 
+  const deleteTransaction = async (transactionId: number) => {
+    const token = await AsyncStorage.getItem("token");
+    if (token) {
+      await axios
+        .delete(`${BASE_URL}/transaction/${transactionId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then(async (res) => {
+          await getTransaction();
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    }
+  };
+
   return (
     <CheckoutContext.Provider
       value={{
         addTransaction,
         getTransaction,
+        deleteTransaction,
         transaction,
       }}
     >

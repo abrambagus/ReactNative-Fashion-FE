@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { createContext, ReactNode, useState } from "react";
+import React, { createContext, ReactNode, useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const BASE_URL = "http://192.168.18.8:8000/api";
@@ -14,6 +14,10 @@ export const FavouriteContextProvider = ({
   children,
 }: FavouriteContextProviderProps) => {
   const [favourites, setFavourites] = useState([]);
+
+  useEffect(() => {
+    (async () => await getFavourites())();
+  }, []);
 
   const addToFavourite = async (productId: number) => {
     const token = await AsyncStorage.getItem("token");

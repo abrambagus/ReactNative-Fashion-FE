@@ -1,12 +1,14 @@
 import React from "react";
 import { Box, Text } from "../../components";
 import moment from "moment";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 interface TransactionProps {
   transaction: any;
+  onDelete: () => void;
 }
 
-const Transaction = ({ transaction }: TransactionProps) => {
+const Transaction = ({ transaction, onDelete }: TransactionProps) => {
   return (
     <Box
       flexDirection="row"
@@ -30,9 +32,11 @@ const Transaction = ({ transaction }: TransactionProps) => {
         </Text>
       </Box>
       <Box>
-        <Text color="secondary" variant="button">
-          See more
-        </Text>
+        <TouchableOpacity onPress={() => onDelete()}>
+          <Text color="danger" variant="button">
+            Delete
+          </Text>
+        </TouchableOpacity>
       </Box>
     </Box>
   );

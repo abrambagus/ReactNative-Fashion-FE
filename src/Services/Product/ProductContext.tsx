@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { createContext, ReactNode, useState } from "react";
+import React, { createContext, ReactNode, useEffect, useState } from "react";
 
 const BASE_URL = "http://192.168.18.8:8000/api";
 
@@ -16,6 +16,10 @@ export const ProductContextProvider = ({
   const [errorProduct, setErrorProduct] = useState("");
   const [searchError, setSearchError] = useState("");
   const [isLoadingProduct, setIsLoadingProduct] = useState(false);
+
+  useEffect(() => {
+    (async () => await getProduct())();
+  }, []);
 
   const getProduct = async () => {
     setIsLoadingProduct(true);

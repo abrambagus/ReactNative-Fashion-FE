@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { ActivityIndicator, FlatList, TouchableOpacity } from "react-native";
 import { Box, Header, useTheme, Text } from "../../components";
 import TextInput from "../../components/Form/TextInput";
@@ -7,14 +7,10 @@ import { ProductContext } from "../../Services";
 import ProductCard from "./ProductCard";
 
 const Product = ({ navigation }: HomeNavigationProps<"Product">) => {
-  const { products, getProduct, isLoadingProduct, searchProduct, searchError } =
+  const { products, isLoadingProduct, searchProduct, searchError } =
     useContext(ProductContext);
   const [searchKeyword, setSearchKeyword] = useState("");
   const theme = useTheme();
-
-  useEffect(() => {
-    (async () => await getProduct())();
-  }, []);
 
   const onSearch = async (keyword: string) => {
     await searchProduct(keyword);

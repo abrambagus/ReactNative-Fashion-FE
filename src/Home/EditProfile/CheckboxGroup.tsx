@@ -1,15 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Button, useTheme } from "../../components";
 
 interface CheckboxGroupProps {
   options: { value: string; label: string }[];
   radio?: boolean;
+  defaultSelected?: any;
   callback?: any;
 }
 
-const CheckboxGroup = ({ options, radio, callback }: CheckboxGroupProps) => {
-  const [selectedValues, setSelectedValues] = useState<string[]>([]);
+const CheckboxGroup = ({
+  options,
+  radio,
+  defaultSelected,
+  callback,
+}: CheckboxGroupProps) => {
+  const [selectedValues, setSelectedValues] = useState<string[]>([
+    `${defaultSelected}`,
+  ]);
   const theme = useTheme();
+
+  useEffect(() => {
+    setSelectedValues([`${defaultSelected}`]);
+  }, [defaultSelected]);
 
   return (
     <Box flexDirection="row" flexWrap="wrap" marginTop="s">
